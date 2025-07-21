@@ -1,0 +1,20 @@
+"use client";
+
+import { logout } from "@/app/actions/auth-actions";
+import React from "react";
+
+const LogoutButton = () => {
+  const handleLogout = async () => {
+    await logout();
+  };
+  return (
+    <span
+      onClick={handleLogout}
+      className="inline-block w-full text-red-700 cursor-pointer"
+    >
+      Log out
+    </span>
+  );
+};
+
+export default LogoutButton;

@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { z } from "zod";
+import React, { useId, useState } from "react";
+import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { signup } from "@/app/actions/auth-actions";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
@@ -27,7 +28,8 @@ const formSchema = z
       .string({ error: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" })
       .regex(passwordRegex, {
-        message: "Password must contain at least 8 characters",
+        message:
+          "Password must contain at least 8 characters and atleast one uppercase letter, one lowercase letter, and one number",
       }),
     confirm_password: z.string({ error: "Confirm password is required" }),
   })
@@ -39,6 +41,8 @@ const formSchema = z
 const SignupForm = ({ className }: { className?: string }) => {
   const [loading, setLoading] = useState(false);
 
+  const toastId = useId();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,10 +53,24 @@ const SignupForm = ({ className }: { className?: string }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast("Signing up..");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.loading("Signing up..", { id: toastId });
     setLoading(true);
-    console.log(values);
+
+    const formData = new FormData();
+    formData.append("full_name", values.full_name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+
+    const { success, error } = await signup(formData);
+    if (!success) {
+      toast.error(String(error), { id: toastId });
+      setLoading(false);
+    } else {
+      toast.success("Signed up successfully", { id: toastId });
+      window.location.href = "/login";
+    }
+    setLoading(false);
   }
 
   return (
