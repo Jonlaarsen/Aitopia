@@ -1,6 +1,7 @@
 "use client";
 
 import { logout } from "@/app/actions/auth-actions";
+import { LogOut } from "lucide-react";
 import React from "react";
 
 const LogoutButton = () => {
@@ -10,8 +11,9 @@ const LogoutButton = () => {
   return (
     <span
       onClick={handleLogout}
-      className="inline-block w-full text-red-700 cursor-pointer"
+      className="flex items-center w-full text-red-700 cursor-pointer gap-1"
     >
+      <LogOut className="text-red-700" />
       Log out
     </span>
   );

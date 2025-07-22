@@ -183,6 +183,8 @@ function Sidebar({
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        <SheetTitle className="sr-only">Sidebar</SheetTitle>
+
         <SheetContent
           data-sidebar="sidebar"
           data-slot="sidebar"
