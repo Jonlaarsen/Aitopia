@@ -14,10 +14,12 @@ export default function DashboardLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <div>
-          <SidebarTrigger className="ml-1 mt-2" />
+        <div className=" h-full">
+          <div>
+            <SidebarTrigger className="ml-1 mt-2" />
+          </div>
+          <main className="flex flex-1 flex-col gap-2 p-4">{children}</main>
         </div>
-        <main className="flex flex-1 flex-col gap-2 p-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
