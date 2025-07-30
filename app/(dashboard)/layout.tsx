@@ -18,7 +18,9 @@ export default function DashboardLayout({
           <div>
             <SidebarTrigger className="ml-1 mt-2" />
           </div>
-          <main className="flex flex-1 flex-col gap-2 p-4">{children}</main>
+          <main className="flex flex-1 flex-col gap-2 p-4  ml-10">
+            {children}
+          </main>
         </div>
       </SidebarInset>
     </SidebarProvider>

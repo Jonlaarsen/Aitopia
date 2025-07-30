@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,22 +28,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { BadgeInfoIcon } from "lucide-react";
-import { generateImageAction } from "@/app/actions/image-actions";
-
-/* 
-{
-  "prompt": "black forest gateau cake spelling out the words \"FLUX DEV\", tasty, food photography, dynamic shot",
-  "go_fast": true,
-  "guidance": 3.5,
-  "megapixels": "1",
-  "num_outputs": 1,
-  "aspect_ratio": "1:1",
-  "output_format": "webp",
-  "output_quality": 80,
-  "prompt_strength": 0.8,
-  "num_inference_steps": 28
-}
-*/
+import useGeneratedStore from "@/store/useGeneratedStore";
 
 export const ImageGeneratorFormSchema = z.object({
   model: z.string({ error: "Model is required" }),
@@ -59,6 +44,7 @@ export const ImageGeneratorFormSchema = z.object({
 });
 
 const Configurations = () => {
+  const generateImage = useGeneratedStore((state) => state.generateImage);
   const form = useForm<z.infer<typeof ImageGeneratorFormSchema>>({
     resolver: zodResolver(ImageGeneratorFormSchema),
     defaultValues: {
@@ -67,7 +53,7 @@ const Configurations = () => {
       guidance: 3.5,
       num_outputs: 1,
       aspect_ratio: "1:1",
-      output_format: "",
+      output_format: "jpg",
       output_quality: 80,
       num_inference_steps: 28,
     },
@@ -75,8 +61,8 @@ const Configurations = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof ImageGeneratorFormSchema>) {
-    const { error, success, data } = await generateImageAction(values);
-    console.log(error, success, data);
+    console.log("Form submitted with values:", values);
+    await generateImage(values);
   }
   return (
     <Form {...form}>
@@ -344,19 +330,14 @@ const Configurations = () => {
                       <p>Write what you want to be rendered in the image.</p>
                     </TooltipContent>
                   </Tooltip>
-                </div>{" "}
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Enter your prompt here..."
-                      className="h-[8rem]"
-                    />
-                  </FormControl>
-                </Select>
+                </div>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Enter your prompt here..."
+                    className="h-[8rem]"
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

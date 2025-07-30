@@ -1,9 +1,18 @@
 import AuthForm from "@/components/authentication/AuthForm";
-import LoginForm from "@/components/authentication/LoginForm";
 import { Sparkle } from "lucide-react";
 import React from "react";
 
-const page = () => {
+interface SearchParams {
+  state?: string;
+}
+
+const page = async ({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) => {
+  const { state } = await searchParams;
+  console.log(state);
   return (
     <div className="h-screen grid grid-cols-1 sm:grid-cols-2 relative">
       <div className="bg-[url('https://images.unsplash.com/photo-1517196084897-498e0abd7c2d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover flex items-center justify-center">
@@ -13,7 +22,7 @@ const page = () => {
       </div>
       <div className="bg-zinc-100 flex items-center justify-center h-full p-8 w-full">
         <div className="max-w-xl w-[400px] mx-auto">
-          <AuthForm />
+          <AuthForm state={state ?? "login"} />
         </div>
       </div>
     </div>
