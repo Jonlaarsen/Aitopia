@@ -24,7 +24,7 @@ export async function checkoutWithStripe(
 ): Promise<CheckoutResponse> {
   try {
     // Get the user from Supabase auth
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
       error,
       data: { user }
@@ -51,6 +51,10 @@ export async function checkoutWithStripe(
       allow_promotion_codes: true,
       billing_address_collection: 'required',
       customer,
+      client_reference_id: user?.id,
+      metadata:{
+        image_generation_count:(price.metadata as {image_generation_count?:number}).image_generation_count ?? 0
+      },
       customer_update: {
         address: 'auto'
       },
@@ -121,7 +125,7 @@ export async function checkoutWithStripe(
 
 export async function createStripePortal(currentPath: string) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
       error,
       data: { user }
@@ -152,7 +156,7 @@ export async function createStripePortal(currentPath: string) {
     try {
       const { url } = await stripe.billingPortal.sessions.create({
         customer,
-        return_url: getURL('/account')
+        return_url: getURL('/billing')
       });
       if (!url) {
         throw new Error('Could not create billing portal');

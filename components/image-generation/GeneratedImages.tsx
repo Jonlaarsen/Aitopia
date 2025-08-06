@@ -28,7 +28,7 @@ const GeneratedImages = () => {
 
   if (images.length === 0) {
     return (
-      <Card className=" w-full max-w-xl 2xl:max-w-2xl bg-zinc-300 text-black">
+      <Card className=" w-full max-w-xl 2xl:max-w-2xl bg-zinc-100 text-black">
         <CardContent className="flex aspect-square items-center justify-center p-4">
           <span className="text-2xl">No Images Generated</span>
         </CardContent>

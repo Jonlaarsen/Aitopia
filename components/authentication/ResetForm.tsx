@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useId } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { resetPassword } from "@/app/actions/auth-actions";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -28,14 +30,36 @@ const ResetForm = ({ className }: { className?: string }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const toastId = useId();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.loading("Sending password reset email..", { id: toastId });
+
+    try {
+      const { success, error } = await resetPassword({
+        email: values.email || "",
+      });
+      if (!success) {
+        toast.error(error, { id: toastId });
+      } else {
+        toast.success("Email sent successfully, Please check your email!", {
+          id: toastId,
+        });
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "There is an error sending the email!", {
+        id: toastId,
+      });
+    }
   }
 
   return (
-    <div className={cn("grid gap-4 w-full", className)}>
+    <div
+      className={cn(
+        "grid gap-4 w-full bg-white rounded-2xl p-8 border border-black",
+        className
+      )}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField

@@ -1,0 +1,207 @@
+"use server"
+import { z } from "zod";
+import Replicate from "replicate";
+import { createClient } from "@/lib/supabase/server";
+import { Database } from "@database.types";
+import { randomUUID } from "crypto";
+import { checkVideoCredits, deductVideoCredits } from "./credit-actions";
+import { VideoGeneratorFormSchema } from "@/components/video-generation/VideoConfigurations";
+
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
+  useFileOutput: false
+});
+
+interface VideoResponse {
+  error: string | null;
+  success: boolean;
+  data: unknown | null;
+}
+
+export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFormSchema>): Promise<VideoResponse> {
+  // Check credits first (uses same pool as images)
+  const { data: credits, error: creditError } = await checkVideoCredits(input.duration, input.resolution);
+  
+  if (!credits || creditError) {
+    return {
+      error: creditError || "No credits available",
+      success: false,
+      data: null,
+    };
+  }
+
+  const modelInput = {
+    prompt: input.prompt,
+    duration: input.duration,
+    fps: input.fps,
+    resolution: input.resolution,
+    aspect_ratio: input.aspect_ratio,
+  };
+
+  try {
+    const output = await replicate.run(input.model as `${string}/${string}` | `${string}/${string}:${string}`, { input: modelInput });
+    console.log("video output", output);
+    
+    // Deduct credits after successful generation
+    await deductVideoCredits(input.duration, input.resolution);
+    
+    return {
+      error: null,
+      success: true,
+      data: output,
+    };
+  } catch (error: any) {
+    console.error("Video generation error:", error);
+    return {
+      error: "Failed to generate video",
+      success: false,
+      data: null,
+    };
+  }
+}
+
+export async function videoUrlToBlob(url: string) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return await blob.arrayBuffer();
+}
+
+type storeVideoInput = { url: string } & Database["public"]["Tables"]["generated_videos"]["Insert"];
+
+export async function storeVideos(data: storeVideoInput[]) {
+  console.log("storeVideos called with data:", data);
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return {
+      error: "User not authenticated",
+      success: false,
+      data: null
+    };
+  }
+
+  const uploadResults = [];
+
+  for (const video of data) {
+    const arrayBuffer = await videoUrlToBlob(video.url);
+    const filename = `video_${randomUUID()}.mp4`;
+    const filepath = `${user.id}/${filename}`;
+
+    const { error: storageError } = await supabase.storage.from("generated.videos").upload(filepath, arrayBuffer, {
+      contentType: 'video/mp4',
+      cacheControl: '3600',
+      upsert: false
+    });
+
+    if (storageError) {
+      uploadResults.push({
+        filename,
+        error: storageError.message,
+        success: false,
+        data: null
+      });
+      continue;
+    }
+
+    const { data: dbData, error: dbError } = await supabase.from("generated_videos").insert([{
+      user_id: user.id,
+      model: video.model,
+      prompt: video.prompt,
+      duration: video.duration,
+      fps: video.fps,
+      resolution: video.resolution,
+      aspect_ratio: video.aspect_ratio,
+      camera_fixed: video.camera_fixed,
+      video_name: filename
+    }]).select();
+
+    if (dbError) {
+      uploadResults.push({
+        filename,
+        error: dbError.message,
+        success: !dbError,
+        data: dbData || null
+      });
+    }
+  }
+
+  console.log("uploadResults:", uploadResults);
+
+  return {
+    error: null,
+    success: true,
+    data: { results: uploadResults }
+  };
+}
+
+export async function getVideos(limit?: number) {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return {
+      error: "User not authenticated",
+      success: false,
+      data: null
+    };
+  }
+
+  let query = supabase.from("generated_videos").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
+
+  if (limit) {
+    query = query.limit(limit);
+  }
+  const { data, error } = await query;
+
+  if (error) {
+    return {
+      error: error.message || "Failed to fetch videos.",
+      success: false,
+      data: null
+    };
+  }
+
+  const videosWithUrls = await Promise.all(
+    data.map(async (video: Database["public"]["Tables"]["generated_videos"]["Row"]) => {
+      const { data } = await supabase.storage.from("generated.videos").createSignedUrl(`${user.id}/${video.video_name}`, 3600);
+
+      return {
+        ...video,
+        url: data?.signedUrl
+      };
+    })
+  );
+
+  return {
+    error: null,
+    success: true,
+    data: videosWithUrls || null
+  };
+}
+
+export async function deleteVideo(id: number, videoName: string) {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return {
+      error: "User not authenticated",
+      success: false,
+      data: null
+    };
+  }
+
+  const { data, error } = await supabase.from("generated_videos").delete().eq('id', id);
+  if (error) {
+    return {
+      error: error.message, success: false, data: null
+    };
+  }
+
+  await supabase.storage.from('generated.videos').remove([`${user.id}/${videoName}`]);
+
+  return {
+    error: null, success: true, data: data
+  };
+} 

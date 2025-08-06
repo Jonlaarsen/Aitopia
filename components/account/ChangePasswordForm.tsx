@@ -1,12 +1,13 @@
 "use client";
 import React, { useId, useState } from "react";
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,16 +15,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { signup } from "@/app/actions/auth-actions";
+import { changePassword } from "@/app/actions/auth-actions";
+import { redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 const formSchema = z
   .object({
-    full_name: z.string().min(3, { message: "Full name is required" }),
-    email: z.string().email({ message: "Invalid email address" }),
     password: z
       .string({ error: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" })
@@ -31,14 +31,14 @@ const formSchema = z
         message:
           "Password must contain at least 8 characters and atleast one uppercase letter, one lowercase letter, and one number",
       }),
-    confirm_password: z.string({ error: "Confirm password is required" }),
+    confirmPassword: z.string({ error: "Confirm password is required" }),
   })
-  .refine((data) => data.password === data.confirm_password, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords does not match",
-    path: ["confirm_password"],
+    path: ["confirmPassword"],
   });
 
-const SignupForm = ({ className }: { className?: string }) => {
+const ChangePasswordForm = ({ className }: { className?: string }) => {
   const [loading, setLoading] = useState(false);
 
   const toastId = useId();
@@ -46,31 +46,28 @@ const SignupForm = ({ className }: { className?: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      full_name: "",
-      email: "",
       password: "",
-      confirm_password: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    toast.loading("Signing up..", { id: toastId });
+    toast.loading("Changing password..", { id: toastId });
     setLoading(true);
-
-    const formData = new FormData();
-    formData.append("full_name", values.full_name);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-
-    const { success, error } = await signup(formData);
-    if (!success) {
-      toast.error(String(error), { id: toastId });
+    try {
+      const { success, error } = await changePassword(values.password);
+      if (!success) {
+        toast.error(String(error), { id: toastId });
+        setLoading(false);
+      } else {
+        toast.success("Changed password successfully", { id: toastId });
+        redirect("/login");
+      }
+    } catch (error: any) {
+      toast.error(String(error?.message), { id: toastId });
+    } finally {
       setLoading(false);
-    } else {
-      toast.success("Signed up successfully", { id: toastId });
-      window.location.href = "/login";
     }
-    setLoading(false);
   }
 
   return (
@@ -80,46 +77,16 @@ const SignupForm = ({ className }: { className?: string }) => {
         className
       )}
     >
+      <div className="flex flex-col space-y-2 text-center ">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Change Password
+        </h1>
+        <p className="text-sm text-zinc-700 pb-4">
+          Enter your new password below to change your password.
+        </p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="full_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full name</FormLabel>
-                <FormControl>
-                  <Input
-                    className="border-zinc-400"
-                    type="text"
-                    placeholder="John/Jane Doe"
-                    {...field}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    className="border-zinc-400"
-                    placeholder="AItopia@example.com"
-                    {...field}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="password"
@@ -134,6 +101,7 @@ const SignupForm = ({ className }: { className?: string }) => {
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>Enter a strong password.</FormDescription>
 
                 <FormMessage />
               </FormItem>
@@ -141,10 +109,10 @@ const SignupForm = ({ className }: { className?: string }) => {
           />
           <FormField
             control={form.control}
-            name="confirm_password"
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
                     className="border-zinc-400"
@@ -153,19 +121,22 @@ const SignupForm = ({ className }: { className?: string }) => {
                     {...field}
                   />
                 </FormControl>
-
+                <FormDescription>Re-enter your new password.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full">
             {loading && <Loader2 className="h-4 mr-2 animate-spin" />}
-            Sign up
+            {loading ? "Changing password..." : "Change password"}
           </Button>
+          <div className="text-center text-sm text-zinc-500">
+            Make sure to remember your new password.
+          </div>
         </form>
       </Form>
     </div>
   );
 };
 
-export default SignupForm;
+export default ChangePasswordForm;

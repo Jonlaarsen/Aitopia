@@ -10,7 +10,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
-import SheetPricing from "./Pricing";
+import Pricing from "./Pricing";
+import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 
 type Product = Tables<"products">;
 type Price = Tables<"prices">;
@@ -23,11 +24,11 @@ interface PriceWithProducts extends Price {
   products: Product | null;
 }
 
-interface SubrscriptionWithProducts extends Subscription {
+interface SubscriptionWithProducts extends Subscription {
   prices: PriceWithProducts | null;
 }
 interface PricingSheetProps {
-  subscription: SubrscriptionWithProducts | null;
+  subscription: SubscriptionWithProducts | null;
   user: User | null;
   products: ProductWithPrices[] | null;
 }
@@ -35,11 +36,13 @@ interface PricingSheetProps {
 const PricingSheet = ({ user, products, subscription }: PricingSheetProps) => {
   return (
     <Sheet>
-      <SheetTrigger>
-        <Button>Upgrade</Button>
+      <SheetTrigger asChild>
+        <span>
+          <Button>Upgrade</Button>
+        </span>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className="flex flex-col justify-center items-center">
+        <SheetHeader className="border-b border-zinc-400">
           <SheetTitle className="text-2xl font-bold">
             Change subscription plan.
           </SheetTitle>
@@ -48,7 +51,11 @@ const PricingSheet = ({ user, products, subscription }: PricingSheetProps) => {
             service.
           </SheetDescription>
         </SheetHeader>
-        <SheetPricing
+        <AnimatedGradientText>
+          <span>Periods</span>
+        </AnimatedGradientText>
+        <Pricing
+          showInterval={true}
           user={user}
           products={products ?? []}
           subscription={subscription}

@@ -26,10 +26,13 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
   const [billingInterval, setBillingInterval] = useState("month");
   console.log(products);
   return (
-    <section className="w-full  bg-zinc-200 flex flex-col items-center justify-center">
+    <section
+      id="pricing"
+      className="w-full  bg-white  flex flex-col items-center justify-center"
+    >
       <div className="w-full container mx-auto py-32 flex flex-col items-center justify-center space-y-6">
         <div className="text-center flex flex-col items-center justify-center">
-          <AnimatedGradientText>
+          <AnimatedGradientText className="text-6xl">
             <span>Pricing</span>
           </AnimatedGradientText>
 

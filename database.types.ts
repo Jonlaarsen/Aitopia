@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      credits: {
+        Row: {
+          created_at: string
+          id: number
+          image_generation_count: number | null
+          max_image_generation_count: number | null
+          max_model_training_count: number | null
+          model_training_count: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          image_generation_count?: number | null
+          max_image_generation_count?: number | null
+          max_model_training_count?: number | null
+          model_training_count?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          image_generation_count?: number | null
+          max_image_generation_count?: number | null
+          max_model_training_count?: number | null
+          model_training_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           id: string
@@ -71,6 +101,48 @@ export type Database = {
           prompt?: string | null
           user_id?: string | null
           width?: number | null
+        }
+        Relationships: []
+      }
+      generated_videos: {
+        Row: {
+          aspect_ratio: string | null
+          camera_fixed: boolean | null
+          created_at: string | null
+          duration: number | null
+          fps: number | null
+          id: number
+          model: string | null
+          prompt: string | null
+          resolution: string | null
+          user_id: string | null
+          video_name: string | null
+        }
+        Insert: {
+          aspect_ratio?: string | null
+          camera_fixed?: boolean | null
+          created_at?: string | null
+          duration?: number | null
+          fps?: number | null
+          id?: number
+          model?: string | null
+          prompt?: string | null
+          resolution?: string | null
+          user_id?: string | null
+          video_name?: string | null
+        }
+        Update: {
+          aspect_ratio?: string | null
+          camera_fixed?: boolean | null
+          created_at?: string | null
+          duration?: number | null
+          fps?: number | null
+          id?: number
+          model?: string | null
+          prompt?: string | null
+          resolution?: string | null
+          user_id?: string | null
+          video_name?: string | null
         }
         Relationships: []
       }

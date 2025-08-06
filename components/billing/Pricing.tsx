@@ -5,38 +5,176 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Tables } from "@/database.types";
 import { Badge } from "../ui/badge";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { User } from "@supabase/supabase-js";
+import { Button } from "../ui/button";
+import { usePathname, useRouter } from "next/navigation";
+import { checkoutWithStripe, createStripePortal } from "@/lib/stripe/server";
+import { getErrorRedirect } from "@/lib/helpers";
+import { getStripe } from "@/lib/stripe/client";
+import { toast } from "sonner";
 
 type Product = Tables<"products">;
 type Price = Tables<"prices">;
+type Subscription = Tables<"subscriptions">;
 
 interface ProductWithPrices extends Product {
   prices: Price[];
 }
 
-interface PricingProps {
-  products: ProductWithPrices[];
-  mostPopularProduct?: string;
+interface PriceWithProducts extends Price {
+  products: Product | null;
 }
 
-const SheetPricing = ({
+interface SubscriptionWithProducts extends Subscription {
+  prices: PriceWithProducts | null;
+}
+
+interface PricingProps {
+  subscription: SubscriptionWithProducts | null;
+  user: User | null;
+  products: ProductWithPrices[] | null;
+  mostPopularProduct?: string;
+  showInterval?: boolean;
+  activeProduct?: string;
+}
+const renderPricingButton = ({
+  subscription,
+  user,
+  product,
+  price,
+  mostPopularProduct,
+  handleStripeCheckout,
+  handleStripePortalRequest,
+}: {
+  subscription: SubscriptionWithProducts | null;
+  user: User | null;
+  product: ProductWithPrices;
+  price: Price;
+  mostPopularProduct: string;
+  handleStripeCheckout: (price: Price) => Promise<void>;
+  handleStripePortalRequest: () => Promise<void>;
+}) => {
+  // case 1: user has active sub for this product
+  if (
+    user &&
+    subscription &&
+    subscription.prices?.products?.name?.toLowerCase() ===
+      product.name?.toLowerCase()
+  ) {
+    return (
+      <span>
+        <Button
+          className="mt-8 w-full font-semibold"
+          variant={"default"}
+          onClick={() => handleStripePortalRequest()}
+        >
+          Manage Subscription
+        </Button>
+      </span>
+    );
+  }
+  // case 2: if a user has an active sub for another product
+  if (user && subscription) {
+    return (
+      <span>
+        <Button
+          className="mt-8 w-full font-semibold"
+          variant={"outline"}
+          onClick={() => handleStripePortalRequest}
+        >
+          Switch Plans
+        </Button>
+      </span>
+    );
+  }
+  // case 3: when a user is logged in with no subs
+  if (user && !subscription) {
+    return (
+      <span>
+        <Button
+          className="mt-8 w-full font-semibold"
+          variant={
+            product.name?.toLowerCase() === mostPopularProduct.toLowerCase()
+              ? "default"
+              : "outline"
+          }
+          onClick={() => handleStripeCheckout(price)}
+        >
+          Subscribe
+        </Button>
+      </span>
+    );
+  }
+  return (
+    <span>
+      <Button
+        className="mt-8 w-full font-semibold"
+        variant={
+          product.name?.toLowerCase() === mostPopularProduct.toLowerCase()
+            ? "default"
+            : "outline"
+        }
+        onClick={() => handleStripeCheckout(price)}
+      >
+        Subscribe
+      </Button>
+    </span>
+  );
+};
+
+const Pricing = ({
+  user,
   products,
-  mostPopularProduct = "pro",
+  mostPopularProduct = "",
+  subscription,
+  showInterval = true,
+  activeProduct = "",
 }: PricingProps) => {
   const [billingInterval, setBillingInterval] = useState("month");
+  const router = useRouter();
+  const currentPath = usePathname();
+
   console.log(products);
+  3;
+
+  const handleStripeCheckout = async (price: Price) => {
+    // console.log("handle strip checkout function", price);
+    if (!user) {
+      return router.push("/login");
+    }
+
+    const { errorRedirect, sessionId } = await checkoutWithStripe(
+      price,
+      currentPath
+    );
+    if (errorRedirect) {
+      return router.push(errorRedirect);
+    }
+    if (!sessionId) {
+      return router.push(
+        getErrorRedirect(
+          currentPath,
+          "An unknown error occured, please try again later or contact us."
+        )
+      );
+    }
+
+    const stripe = await getStripe();
+    stripe?.redirectToCheckout({ sessionId });
+  };
+
+  const handleStripePortalRequest = async () => {
+    toast.info("Redirecting to stripe portal...");
+    const redirectUrl = await createStripePortal(currentPath);
+    console.log(redirectUrl);
+    return router.push(redirectUrl);
+  };
+
   return (
-    <section className="w-full max-w-7xl bg-zinc-100 flex overflow-y-scroll pt-[20rem] flex-col items-center justify-center">
-      <div className="w-full container mx-auto py-32 flex flex-col items-center justify-center space-y-6">
-        <div className="text-center flex flex-col items-center justify-center">
-          <AnimatedGradientText>
-            <span>Periods</span>
-          </AnimatedGradientText>
-        </div>
-        <div className="flex items-center justify-center space-x-4">
+    <section className="w-full max-w-9xl bg-zinc-50 rounded-2xl border border-zinc-300 flex p-2 overflow-y-auto flex-col items-center justify-center">
+      {showInterval && (
+        <div className="flex items-center justify-center space-x-4 pt-[12rem]">
           <Label htmlFor="pricing-switch" className="font-semibold text-base">
             Monthly
           </Label>
@@ -51,8 +189,10 @@ const SheetPricing = ({
             Yearly
           </Label>
         </div>
-        <div className="grid grid-cols-1 px-4  place-items-center mx-auto gap-6">
-          {products.map((product) => {
+      )}
+      <div className="w-full container mx-auto py-10 flex flex-col items-center justify-center space-y-6">
+        <div className="flex flex-wrap px-4  place-items-center mx-auto gap-6">
+          {products?.map((product) => {
             const price = product?.prices?.find(
               (price) => price.interval === billingInterval
             );
@@ -68,9 +208,8 @@ const SheetPricing = ({
               <div
                 key={product.id}
                 className={cn(
-                  "border bg-white rounded-2xl shadow-sm h-fit divide-border  divide-y",
-                  product.name?.toLowerCase() ===
-                    mostPopularProduct.toLowerCase()
+                  "border bg-white max-w-[21rem] h-[18rem]  rounded-2xl shadow-sm  divide-border  divide-y",
+                  product.name?.toLowerCase() === activeProduct.toLowerCase()
                     ? "border-black scale-102 shadow-md"
                     : "border-zinc-200"
                 )}
@@ -78,13 +217,20 @@ const SheetPricing = ({
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold leading-6 flex items-center justify-between">
                     {product.name}
-                    {product.name?.toLowerCase() === "pro" ? (
+                    {product.name?.toLowerCase() ===
+                    activeProduct.toLowerCase() ? (
                       <Badge className="border font-semibold rounded-full bg-zinc-900 text-white">
+                        Selected
+                      </Badge>
+                    ) : null}
+                    {product.name?.toLowerCase() ===
+                    mostPopularProduct.toLowerCase() ? (
+                      <Badge className="border font-semibold rounded-full bg-purple-600 text-white">
                         Most Popular
                       </Badge>
                     ) : null}
                   </h2>
-                  <p className="text-zinc-600 mt-4 text-sm">
+                  <p className="text-zinc-600 mt-4 min-h-14 text-sm">
                     {product.description}
                   </p>
                   <p className="mt-8">
@@ -93,39 +239,17 @@ const SheetPricing = ({
                       / {billingInterval}
                     </span>
                   </p>
-                  <Link href="/login?state=signup">
-                    <Button
-                      className="mt-8 w-full font-semibold border-2 border-black/50"
-                      variant={
-                        product.name?.toLowerCase() ===
-                        mostPopularProduct.toLowerCase()
-                          ? "default"
-                          : "secondary"
-                      }
-                    >
-                      Subscribe
-                    </Button>
-                  </Link>
+
+                  {renderPricingButton({
+                    subscription,
+                    user,
+                    product,
+                    price,
+                    mostPopularProduct,
+                    handleStripeCheckout,
+                    handleStripePortalRequest,
+                  })}
                 </div>
-                {/* <div className="pt-6 pb-8 px-6">
-                  <h3 className="uppercase tracking-wide text-black font-medium text-sm ">
-                    What's included?
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    {Object.values(product.metadata || {}).map(
-                      (feature, index) => {
-                        if (feature) {
-                          return (
-                            <li className="flex space-x-2" key={index}>
-                              <Check className="h-5 w-5 text-black" />
-                              <span className="text-zinc-800">{feature}</span>
-                            </li>
-                          );
-                        }
-                      }
-                    )}
-                  </ul>
-                </div> */}
               </div>
             );
           })}
@@ -135,4 +259,4 @@ const SheetPricing = ({
   );
 };
 
-export default SheetPricing;
+export default Pricing;

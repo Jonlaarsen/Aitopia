@@ -1,3 +1,8 @@
+import Features from "@/components/landing-page/Features";
+import FAQ from "@/components/landing-page/FAQ";
+import Footer from "@/components/landing-page/Footer";
+import HeroSection from "@/components/landing-page/HeroSection";
+import Navbar from "@/components/landing-page/Navbar";
 import Pricing from "@/components/landing-page/Pricing";
 import { getProducts, getUser } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
@@ -17,7 +22,12 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col min-h-screen items-center justify-center">
+      <Navbar />
+      <HeroSection />
+      <Features />
       <Pricing products={products ?? []} />
+      <FAQ />
+      <Footer />
     </main>
   );
 }

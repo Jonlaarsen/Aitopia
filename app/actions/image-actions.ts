@@ -1,12 +1,12 @@
 "use server"
 import { file, success, z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageGeneratorFormSchema } from "@/components/image-generation/Configurations"
 import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";
 import { Database } from "@database.types";
 import {imageMeta} from "image-meta";
 import { randomUUID } from "crypto";
+import { getCredits } from "./credit-actions";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -21,9 +21,17 @@ interface ImageResponse {
 }
 
 export async function generateImageAction(input : (z.infer<typeof ImageGeneratorFormSchema>)):Promise<ImageResponse>{
-    console.log("generateImageAction called with input:", input);
 
-    const modelInput = {
+  const {data: credits} = await getCredits()
+  if(!credits?.image_generation_count || credits.image_generation_count <= 0){
+    return{
+      error: "No credits available",
+      success: false,
+      data: null,
+    }
+  }
+
+  const modelInput = {
   prompt: input.prompt,
   go_fast: true,
   guidance: input.guidance,

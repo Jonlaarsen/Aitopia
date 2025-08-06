@@ -1,5 +1,5 @@
 "use client";
-import React, { use } from "react";
+import React, { useEffect } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -41,6 +41,10 @@ export const ImageGeneratorFormSchema = z.object({
   num_inference_steps: z
     .number()
     .min(1, { message: "Number of inference steps is required" }),
+  seed: z.number().optional(),
+  scheduler: z.string().optional(),
+  negative_prompt: z.string().optional(),
+  style_preset: z.string().optional(),
 });
 
 const Configurations = () => {
@@ -58,6 +62,23 @@ const Configurations = () => {
       num_inference_steps: 28,
     },
   });
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name === "model") {
+        let newSteps;
+
+        if (value.model === "black-forest-labs/flux-schnell") {
+          newSteps = 4;
+        } else {
+          newSteps = 28;
+        }
+        if (newSteps !== undefined) {
+          form.setValue("num_inference_steps", newSteps);
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof ImageGeneratorFormSchema>) {
@@ -98,9 +119,11 @@ const Configurations = () => {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="black-forest-labs/flux-dev">
-                      Dev
+                      Flux Dev (Quality)
                     </SelectItem>
-                    <SelectItem value="m@google.com">Schnell</SelectItem>
+                    <SelectItem value="black-forest-labs/flux-schnell">
+                      Flux Schnell (Fast)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -135,8 +158,15 @@ const Configurations = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="1:1">1:1</SelectItem>
-                      <SelectItem value="16:9">16:9</SelectItem>
+                      <SelectItem value="1:1">1:1 (Square)</SelectItem>
+                      <SelectItem value="4:3">4:3 (Standard)</SelectItem>
+                      <SelectItem value="3:2">3:2 (Classic)</SelectItem>
+                      <SelectItem value="16:9">16:9 (Widescreen)</SelectItem>
+                      <SelectItem value="16:10">16:10 (Widescreen)</SelectItem>
+                      <SelectItem value="21:9">21:9 (Ultrawide)</SelectItem>
+                      <SelectItem value="9:16">9:16 (Portrait)</SelectItem>
+                      <SelectItem value="3:4">3:4 (Portrait)</SelectItem>
+                      <SelectItem value="2:3">2:3 (Portrait)</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -235,8 +265,13 @@ const Configurations = () => {
                 <FormControl>
                   <Slider
                     defaultValue={[field.value]}
-                    min={0}
-                    max={50}
+                    min={1}
+                    max={
+                      form.getValues("model") ===
+                      "black-forest-labs/flux-schnell"
+                        ? 4
+                        : 50
+                    }
                     step={1}
                     onValueChange={(value) => field.onChange(value[0])}
                   />
@@ -305,9 +340,10 @@ const Configurations = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="jpg">jpg</SelectItem>
-                    <SelectItem value="png">png</SelectItem>
-                    <SelectItem value="webp">webp</SelectItem>
+                    <SelectItem value="jpg">JPG (Compressed)</SelectItem>
+                    <SelectItem value="jpeg">JPEG (High Quality)</SelectItem>
+                    <SelectItem value="png">PNG (Lossless)</SelectItem>
+                    <SelectItem value="webp">WebP (Modern)</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -344,7 +380,7 @@ const Configurations = () => {
           />
 
           <Button className="w-full" type="submit">
-            Submit
+            Generate Image
           </Button>
         </fieldset>
       </form>

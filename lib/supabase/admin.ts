@@ -2,7 +2,7 @@ import { toDateTime } from '@/lib/helpers';
 import { stripe } from '@/lib/stripe/config';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
-import type { Tables, TablesInsert } from '@database.types';
+import type { Json, Tables, TablesInsert } from '@database.types';
 
 type Product = Tables<'products'>;
 type Price = Tables<'prices'>;
@@ -49,7 +49,9 @@ const upsertPriceRecord = async (
     unit_amount: price.unit_amount ?? null,
     interval: price.recurring?.interval ?? null,
     interval_count: price.recurring?.interval_count ?? null,
-    trial_period_days: price.recurring?.trial_period_days ?? TRIAL_PERIOD_DAYS
+    trial_period_days: price.recurring?.trial_period_days ?? TRIAL_PERIOD_DAYS,
+    description: null,
+    metadata: price.metadata ?? null
   };
 
   const { error: upsertError } = await supabaseAdmin
@@ -227,13 +229,13 @@ const manageSubscriptionStatusChange = async (
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ['default_payment_method']
-  });
+  }) as Stripe.Subscription;
   // Upsert the latest status of the subscription object.
   const subscriptionData: TablesInsert<'subscriptions'> = {
     id: subscription.id,
     user_id: uuid,
     metadata: subscription.metadata,
-    status: subscription.status,
+    status: subscription.status === 'paused' ? 'active' : subscription.status,
     price_id: subscription.items.data[0].price.id,
     //TODO check quantity on subscription
     // @ts-ignore
@@ -245,13 +247,15 @@ const manageSubscriptionStatusChange = async (
     canceled_at: subscription.canceled_at
       ? toDateTime(subscription.canceled_at).toISOString()
       : null,
-    current_period_start: toDateTime(
-      subscription.current_period_start
-    ).toISOString(),
-    current_period_end: toDateTime(
-      subscription.current_period_end
-    ).toISOString(),
-    created: toDateTime(subscription.created).toISOString(),
+    current_period_start: (subscription as any).current_period_start
+      ? toDateTime((subscription as any).current_period_start).toISOString()
+      : new Date().toISOString(),
+    current_period_end: (subscription as any).current_period_end
+      ? toDateTime((subscription as any).current_period_end).toISOString()
+      : new Date().toISOString(),
+    created: subscription.created
+      ? toDateTime(subscription.created).toISOString()
+      : new Date().toISOString(),
     ended_at: subscription.ended_at
       ? toDateTime(subscription.ended_at).toISOString()
       : null,
@@ -281,6 +285,22 @@ const manageSubscriptionStatusChange = async (
       subscription.default_payment_method as Stripe.PaymentMethod
     );
 };
+
+export const updateUserCredits = async(userId: string, metadata : Json) => {
+  const creditsData: TablesInsert<"credits"> = {
+    user_id: userId,
+    image_generation_count: (metadata as {image_generation_count?: number}).image_generation_count ?? 0,
+    max_image_generation_count: (metadata as {image_generation_count?: number}).image_generation_count ?? 0,
+
+  }
+  const {error: upsertError} = await supabaseAdmin.from("credits").upsert(creditsData).eq("user_id", userId)
+
+  if(upsertError){
+    throw new Error(`credits update failed: ${upsertError.message}`)
+  }
+
+  console.log("updated credits for the user", userId)
+}
 
 export {
   upsertProductRecord,

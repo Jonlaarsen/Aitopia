@@ -58,7 +58,12 @@ const LoginForm = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className={cn("grid gap-4 w-full", className)}>
+    <div
+      className={cn(
+        "grid gap-4 w-full bg-white rounded-2xl p-8 border border-black",
+        className
+      )}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField

@@ -1,4 +1,6 @@
+import { getCredits } from "@/app/actions/credit-actions";
 import PlanSummary from "@/components/billing/PlanSummary";
+import Pricing from "@/components/billing/Pricing";
 import { getProducts, getSubscription, getUser } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -15,6 +17,9 @@ const page = async () => {
   if (!user) {
     return redirect("/login");
   }
+
+  const { data: credits } = await getCredits();
+
   return (
     <section className="container mx-auto space-y-8">
       <div>
@@ -25,10 +30,22 @@ const page = async () => {
       </div>
       <div className="grid gap-10">
         <PlanSummary
+          credits={credits}
           subscription={subscription}
           user={user}
           products={products || []}
         />
+        {subscription.status === "active" && (
+          <Pricing
+            showInterval={false}
+            user={user}
+            products={products ?? []}
+            subscription={subscription}
+            activeProduct={
+              subscription?.prices?.products?.name.toLowerCase() || "pro"
+            }
+          />
+        )}
       </div>
     </section>
   );
