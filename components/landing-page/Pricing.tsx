@@ -122,7 +122,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
                 </div>
                 <div className="pt-6 pb-8 px-6">
                   <h3 className="uppercase tracking-wide text-black font-medium text-sm ">
-                    What's included?
+                    What&apos;s included?
                   </h3>
                   <ul className="mt-4 space-y-4">
                     {Object.values(product.metadata || {}).map(

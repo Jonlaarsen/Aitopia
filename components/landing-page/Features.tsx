@@ -2,7 +2,7 @@
 import React from "react";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import SpotlightCard from "../ui/spotlight-card";
-import { Code, Image, Palette, Zap } from "lucide-react";
+import { Code, ImageIcon, Palette, Video } from "lucide-react";
 import { motion } from "motion/react";
 
 const Features = () => {
@@ -40,12 +40,9 @@ const Features = () => {
           <div className="flex h-full flex-col">
             <div className="flex items-center gap-4">
               <div className="rounded-xl bg-primary/10 p-3">
-                <Image
-                  src="/globe.svg"
-                  alt="AI Globe Icon"
-                  width={48}
-                  height={48}
-                  className="h-12 w-12"
+                <ImageIcon
+                  className="h-8 w-8 text-zinc-800"
+                  strokeWidth={1.5}
                 />
               </div>
               <div className="space-y-1">
@@ -74,7 +71,7 @@ const Features = () => {
           <div className="flex h-full flex-col">
             <div className="flex items-center gap-4">
               <div className="rounded-xl bg-indigo-500/10 p-3">
-                <Zap className="h-8 w-8 text-indigo-500" strokeWidth={1.5} />
+                <Video className="h-8 w-8 text-indigo-500" strokeWidth={1.5} />
               </div>
               <div className="space-y-1">
                 <h3 className="text-xl font-medium">AI videos</h3>

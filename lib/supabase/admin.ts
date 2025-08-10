@@ -198,8 +198,11 @@ const copyBillingDetailsToCustomer = async (
   const customer = payment_method.customer as string;
   const { name, phone, address } = payment_method.billing_details;
   if (!name || !phone || !address) return;
-  //@ts-ignore
-  await stripe.customers.update(customer, { name, phone, address });
+  await stripe.customers.update(customer, { 
+    name, 
+    phone, 
+    address: address as Stripe.AddressParam 
+  });
   const { error: updateError } = await supabaseAdmin
     .from('users')
     .update({
@@ -238,8 +241,7 @@ const manageSubscriptionStatusChange = async (
     status: subscription.status === 'paused' ? 'active' : subscription.status,
     price_id: subscription.items.data[0].price.id,
     //TODO check quantity on subscription
-    // @ts-ignore
-    quantity: subscription.quantity,
+    quantity: subscription.items.data[0].quantity || 1,
     cancel_at_period_end: subscription.cancel_at_period_end,
     cancel_at: subscription.cancel_at
       ? toDateTime(subscription.cancel_at).toISOString()
@@ -247,11 +249,11 @@ const manageSubscriptionStatusChange = async (
     canceled_at: subscription.canceled_at
       ? toDateTime(subscription.canceled_at).toISOString()
       : null,
-    current_period_start: (subscription as any).current_period_start
-      ? toDateTime((subscription as any).current_period_start).toISOString()
+    current_period_start: (subscription as Stripe.Subscription & { current_period_start: number }).current_period_start
+      ? toDateTime((subscription as Stripe.Subscription & { current_period_start: number }).current_period_start).toISOString()
       : new Date().toISOString(),
-    current_period_end: (subscription as any).current_period_end
-      ? toDateTime((subscription as any).current_period_end).toISOString()
+    current_period_end: (subscription as Stripe.Subscription & { current_period_end: number }).current_period_end
+      ? toDateTime((subscription as Stripe.Subscription & { current_period_end: number }).current_period_end).toISOString()
       : new Date().toISOString(),
     created: subscription.created
       ? toDateTime(subscription.created).toISOString()
@@ -279,7 +281,6 @@ const manageSubscriptionStatusChange = async (
   // For a new subscription copy the billing details to the customer object.
   // NOTE: This is a costly operation and should happen at the very end.
   if (createAction && subscription.default_payment_method && uuid)
-    //@ts-ignore
     await copyBillingDetailsToCustomer(
       uuid,
       subscription.default_payment_method as Stripe.PaymentMethod

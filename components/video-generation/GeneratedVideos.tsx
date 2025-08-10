@@ -11,8 +11,7 @@ import {
 import useVideoStore from "@/store/useVideoStore";
 
 const GeneratedVideos = () => {
-  const videos = useVideoStore((state) => state.videos);
-  const loading = useVideoStore((state) => state.loading);
+  const { videos, loading: isLoading } = useVideoStore();
 
   if (videos.length === 0) {
     return (

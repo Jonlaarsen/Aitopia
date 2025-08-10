@@ -1,8 +1,7 @@
 import { getCredits } from "@/app/actions/credit-actions";
 import { getImages } from "@/app/actions/image-actions";
-import QuickActions from "@/components/dashboard/QuickActions";
-import RecentImages from "@/components/dashboard/RecentImages";
-import StatsCards from "@/components/dashboard/StatsCards";
+import { StatsCards } from "@/components/dashboard/StatsCards";
+import { RecentImages } from "@/components/dashboard/RecentImages";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Page() {
