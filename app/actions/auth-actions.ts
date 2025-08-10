@@ -22,11 +22,43 @@ export async function signup(formData: FormData): Promise<AuthResponse> {
 
     const { data : signupData, error } = await supabase.auth.signUp(data);
 
-    return{
-        error: error?.message || `There was an error signing up`,
-        success: !error,
-        data: signupData || null
+    if (error) {
+        return {
+            error: error.message || `There was an error signing up`,
+            success: false,
+            data: null
+        };
     }
+
+    // If signup successful, create initial credits for the new user
+    if (signupData.user) {
+        try {
+            const { error: creditsError } = await supabase
+                .from('credits')
+                .insert({
+                    user_id: signupData.user.id,
+                    image_generation_count: 5, // 5 free credits
+                    max_image_generation_count: 5,
+                    model_training_count: 0,
+                    max_model_training_count: 0
+                });
+
+            if (creditsError) {
+                console.error('Error creating initial credits:', creditsError);
+                // Don't fail the signup if credits creation fails
+                // The user can still sign up, just won't have initial credits
+            }
+        } catch (creditsError) {
+            console.error('Error creating initial credits:', creditsError);
+            // Don't fail the signup if credits creation fails
+        }
+    }
+
+    return {
+        error: null,
+        success: true,
+        data: signupData
+    };
 }
 
 export async function login(formData: FormData): Promise<AuthResponse> {

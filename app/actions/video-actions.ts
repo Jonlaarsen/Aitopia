@@ -4,7 +4,7 @@ import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";
 import { Database } from "@database.types";
 import { randomUUID } from "crypto";
-import { checkVideoCredits, deductVideoCredits } from "./credit-actions";
+import { getCredits } from "./credit-actions";
 import { VideoGeneratorFormSchema } from "@/components/video-generation/VideoConfigurations";
 
 const replicate = new Replicate({
@@ -19,32 +19,28 @@ interface VideoResponse {
 }
 
 export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFormSchema>): Promise<VideoResponse> {
-  // Check credits first (uses same pool as images)
-  const { data: credits, error: creditError } = await checkVideoCredits(input.duration, input.resolution);
-  
-  if (!credits || creditError) {
+  const { data: credits } = await getCredits();
+  if (!credits?.image_generation_count || credits.image_generation_count <= 0) {
     return {
-      error: creditError || "No credits available",
+      error: "No credits available",
       success: false,
       data: null,
     };
   }
 
+  // Seedance Pro specific parameters
   const modelInput = {
     prompt: input.prompt,
     duration: input.duration,
     fps: input.fps,
     resolution: input.resolution,
     aspect_ratio: input.aspect_ratio,
+    // Seedance Pro doesn't use camera_fixed parameter
   };
 
   try {
     const output = await replicate.run(input.model as `${string}/${string}` | `${string}/${string}:${string}`, { input: modelInput });
     console.log("video output", output);
-    
-    // Deduct credits after successful generation
-    await deductVideoCredits(input.duration, input.resolution);
-    
     return {
       error: null,
       success: true,

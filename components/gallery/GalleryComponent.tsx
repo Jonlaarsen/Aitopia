@@ -29,7 +29,7 @@ const GalleryComponent = ({ images }: GalleryProps) => {
 
   return (
     <section className="container mx-auto py-8">
-      <div className="columns-4 gap-4 space-x-4">
+      <div className="columns-2 sm:columns-3 md:columns-4 gap-2 space-x-2 space-y-2">
         {images.map((image, index) => (
           <div key={index}>
             <div

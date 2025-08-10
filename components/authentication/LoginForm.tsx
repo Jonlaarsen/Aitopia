@@ -60,7 +60,7 @@ const LoginForm = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "grid gap-4 w-full bg-white rounded-2xl p-8 border border-black",
+        "grid gap-4 w-full bg-white rounded-2xl p-8 border border-black ",
         className
       )}
     >

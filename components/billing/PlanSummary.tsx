@@ -106,8 +106,8 @@ const PlanSummary = ({
               {subscriptionProduct?.name} Plan
             </Badge>
           </h3>
-          <div className="grid grid-cols-8 gap-4">
-            <div className="col-span-5 flex flex-col pr-12">
+          <div className="grid grid-cols-1 sm:grid-cols-8 gap-4">
+            <div className="sm:col-span-5 flex flex-col pr-12">
               <div className="flex-1 text-sm flex w-full justify-between items-center pb-2 px-2">
                 <span className="font-bold">
                   {imageGenCounter}/{maxImageGenCounter}
@@ -121,7 +121,7 @@ const PlanSummary = ({
                 />
               </div>
             </div>
-            <div className="col-span-3 flex flex-row justify-between flex-wrap">
+            <div className="sm:col-span-3 flex flex-col space-y-4 sm:flex-row justify-between flex-wrap">
               <div className="flex flex-col pb-0">
                 <div className="text-sm font-normal">Price/Month</div>
                 <div className="flex-1 pt-1 text-sm font-medium">

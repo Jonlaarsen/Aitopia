@@ -9,7 +9,7 @@ const AuthForm = ({ state }: { state: string }) => {
   const [mode, setMode] = useState(state);
   return (
     <div className="space-y-4 w-full">
-      <div className="flex flex-col space-y-2 text-center ">
+      <div className="flex flex-col space-y-2 text-center px-4 sm:px-0 ">
         <h1 className="text-2xl font-semibold tracking-tight">
           {mode === "reset"
             ? "Reset Password"
@@ -26,9 +26,9 @@ const AuthForm = ({ state }: { state: string }) => {
         </p>
       </div>
       {mode === "login" && (
-        <>
+        <div>
           <LoginForm />
-          <div className="flex justify-evenly">
+          <div className="flex sm:flex-row flex-col justify-evenly ">
             <Button variant={"link"} onClick={() => setMode("signup")}>
               Need an account? Sign Up
             </Button>
@@ -36,12 +36,12 @@ const AuthForm = ({ state }: { state: string }) => {
               Forgot your password?
             </Button>
           </div>
-        </>
+        </div>
       )}
       {mode === "signup" && (
         <>
           <SignupForm />
-          <div className="flex justify-evenly">
+          <div className="flex sm:flex-row flex-col justify-evenly ">
             <Button variant={"link"} onClick={() => setMode("login")}>
               Already have an account?
             </Button>

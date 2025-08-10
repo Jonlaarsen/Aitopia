@@ -131,3 +131,7 @@
 button, a {
   cursor:pointer;
 }
+
+html{
+  scroll-behavior: smooth;
+}

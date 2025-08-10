@@ -1,15 +1,20 @@
+"use client";
 import React from "react";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import SpotlightCard from "../ui/spotlight-card";
 import { Code, Image, Palette, Sparkles, Zap } from "lucide-react";
+import { motion } from "motion/react";
 
 const Features = () => {
   return (
     <section
       id="features"
-      className="w-full bg-zinc-100 border-y-4 border-purple-400/20 h-full py-22 flex flex-col items-center justify-center overflow-hidden"
+      className="w-full bg-gradient-to-br from-purple-50 to-pink-50 via-zinc-50 via-50% border-y-4 border-purple-400/20 h-full py-22 flex flex-col items-center justify-center overflow-hidden relative"
     >
-      <div className="text-center flex flex-col items-center justify-center">
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.9)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.9)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
+
+      <div className="text-center flex flex-col items-center justify-center relative z-10">
         <AnimatedGradientText className="text-6xl">
           <span>Features</span>
         </AnimatedGradientText>
@@ -24,7 +29,13 @@ const Features = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 px-10 pt-20">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        viewport={{ once: true }}
+        className="grid gap-6 md:grid-cols-2 px-10 pt-20 relative z-10"
+      >
         <SpotlightCard className="h-fit p-8 transition-all border-4">
           <div className="flex h-full flex-col">
             <div className="flex items-center gap-4">
@@ -139,7 +150,7 @@ const Features = () => {
             </div>
           </div>
         </SpotlightCard>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -77,7 +77,9 @@ const ImageDialog = ({ image, onClose }: ImageDialogProps) => {
                 Model :
               </span>
 
-              {image.model}
+              {image.model === "black-forest-labs/flux-schnell"
+                ? "Flux-Schnell"
+                : "Flux-dev"}
             </Badge>
             <Badge
               className="rounded-4xl border border-black/40 px-4 py-2 text-sm font-medium"

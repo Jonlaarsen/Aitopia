@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
 import { getVideos } from "@/app/actions/video-actions";
 import { Tables } from "@/database.types";
-import { Trash2, Download } from "lucide-react";
 import { deleteVideo } from "@/app/actions/video-actions";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { Download, Trash2 } from "lucide-react";
 
 type Video = {
   url: string | undefined;
@@ -68,43 +68,43 @@ const VideoGalleryComponent = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {videos.map((video) => (
-        <Card key={video.id} className="overflow-hidden">
-          <CardContent className="p-0">
-            <video
-              className="w-full aspect-video object-cover"
-              controls
-              src={video.url}
-            >
-              Your browser does not support the video tag.
-            </video>
-            <div className="p-4">
-              <p className="text-sm text-muted-foreground mb-2">{video.prompt}</p>
-              <div className="flex justify-between items-center">
-                <div className="text-xs text-muted-foreground">
-                  {video.resolution} • {video.fps}fps • {video.duration}s
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleDownload(video.url!, video.prompt!)}
-                  >
-                    <Download className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleDelete(video.id, video.video_name!)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+        <div key={video.id} className="overflow-hidden">
+          <video
+            className="w-full  object-cover"
+            controls={true}
+            src={video.url}
+          >
+            Your browser does not support the video tag.
+          </video>
+          <div className="p-4 border-b border-x">
+            <p className="text-sm text-muted-foreground mb-2">
+              Prompt: {video.prompt}
+            </p>
+            <div className="flex justify-between items-center">
+              <div className="text-xs text-muted-foreground">
+                {video.resolution} • {video.fps}fps • {video.duration}s
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDownload(video.url!, video.prompt!)}
+                >
+                  <Download className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDelete(video.id, video.video_name!)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ))}
     </div>
   );

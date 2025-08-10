@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 
 type Product = Tables<"products">;
 type Price = Tables<"prices">;
@@ -28,7 +29,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
   return (
     <section
       id="pricing"
-      className="w-full  bg-white  flex flex-col items-center justify-center"
+      className="w-full bg-white flex flex-col items-center justify-center"
     >
       <div className="w-full container mx-auto py-32 flex flex-col items-center justify-center space-y-6">
         <div className="text-center flex flex-col items-center justify-center">
@@ -36,7 +37,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
             <span>Pricing</span>
           </AnimatedGradientText>
 
-          <h1 className="text-3xl font-bold text-zinc-700 mt-8">
+          <h1 className="text-3xl font-bold text-zinc-700 mb-4 mt-8">
             Choose the plan that fits your needs.
           </h1>
           <p className="text-sm text-zinc-600">
@@ -59,7 +60,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
             Yearly
           </Label>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 place-items-center mx-auto gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 place-items-center px-4 mx-auto gap-6">
           {products.map((product) => {
             const price = product?.prices?.find(
               (price) => price.interval === billingInterval
@@ -73,7 +74,11 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
             }).format((price?.unit_amount || 0) / 100);
 
             return (
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                viewport={{ once: true }}
                 key={product.id}
                 className={cn(
                   "border bg-white rounded-2xl shadow-sm h-fit divide-border  divide-y",
@@ -134,7 +139,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
                     )}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

@@ -11,7 +11,7 @@ interface StatsCardsProps {
 
 const StatsCards = ({ imageCount, credits }: StatsCardsProps) => {
   return (
-    <div className="grid grid-cols-3 pr-10  gap-6  ">
+    <div className="grid grid-cols-1 sm:grid-cols-3 pr-10  gap-6  ">
       <div className="flex items-center justify-start">
         <Card className="space-y-0 max-w-[25rem] w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 ">

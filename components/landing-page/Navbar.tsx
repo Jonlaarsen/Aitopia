@@ -20,16 +20,25 @@ const NavItems = () => {
         Pricing
       </Link>
       <Link
-        href="#faqs"
+        href="#faq"
         className=" font-medium hover:underline underline-offset-2"
       >
-        Faqs
+        FAQ
       </Link>
       <Link
         href="/login?state=signup"
         className=" font-medium hover:underline underline-offset-2"
       >
-        <Button size={"sm"}>Sign Up</Button>
+        <Button variant={"outline"} size={"sm"}>
+          get started
+        </Button>
+      </Link>
+      <Link
+        href="/login
+        "
+        className=" font-medium hover:underline underline-offset-2"
+      >
+        <Button size={"sm"}>Login</Button>
       </Link>
     </>
   );
@@ -40,7 +49,10 @@ const Navbar = () => {
     <div className="top-0 w-full fixed bg-white/80 shadow-2xl overflow-hidden z-50 py-4 px-8 backdrop-blur-md">
       <header className="container mx-auto items-center justify-between flex">
         <div className="flex items-center justify-between font-bold text-lg">
-          <Sparkle className="h-7 w-7 mr-2" />
+          <div className="bg-gradient-to-b from-purple-600 to-pink-400 p-2 rounded-2xl mr-2">
+            <Sparkle className="h-7 w-7 text-white" />
+          </div>
+
           <span>AItopia</span>
         </div>
         <nav className="md:flex hidden justify-center items-center ml-auto space-x-4 text-sm">
