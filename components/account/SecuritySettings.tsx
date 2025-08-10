@@ -26,10 +26,9 @@ const SecuritySettings = ({ user }: SecuritySettingsProps) => {
           id: toastId,
         });
       }
-    } catch (error: any) {
-      toast.error(error?.message || "There is an error sending the email!", {
-        id: toastId,
-      });
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to enable 2FA";
+      toast.error(errorMessage);
     }
   }
 

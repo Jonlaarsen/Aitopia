@@ -16,7 +16,13 @@ const QuickActions = () => {
         </Button>
         <Button asChild variant={"outline"} className="w-full">
           <Link href={"/image-gallery"}>
-            <Image className="h-4 w-4 mr-2" />
+            <Image
+              src={action.icon}
+              alt={`${action.title} icon`}
+              width={24}
+              height={24}
+              className="h-6 w-6"
+            />
             View Gallery
           </Link>
         </Button>

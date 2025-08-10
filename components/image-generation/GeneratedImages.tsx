@@ -22,8 +22,7 @@ import Image from "next/image";
 // ];
 
 const GeneratedImages = () => {
-  const images = useGeneratedStore((state) => state.images);
-  const loading = useGeneratedStore((state) => state.loading);
+  const { images, loading: isLoading } = useGeneratedStore();
   console.log("images", images);
 
   if (images.length === 0) {

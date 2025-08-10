@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Tables } from "@/database.types";

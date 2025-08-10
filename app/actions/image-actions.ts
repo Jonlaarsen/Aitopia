@@ -3,6 +3,7 @@ import { file, success, z } from "zod";
 import { ImageGeneratorFormSchema } from "@/components/image-generation/Configurations"
 import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 import { Database } from "@database.types";
 import {imageMeta} from "image-meta";
 import { randomUUID } from "crypto";
@@ -53,14 +54,14 @@ try {
             data: output,
         }
 
-}catch(error: any){
+} catch (error: unknown) {
+    console.error("Image generation error:", error);
     return {
-        
-        error: "failed to generate image",
-        success:false,
-        data:null,
-}
-}
+      error: "Failed to generate image",
+      success: false,
+      data: null,
+    };
+  }
 
 
 }

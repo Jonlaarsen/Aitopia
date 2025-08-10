@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
 import PricingSheet from "./PricingSheet";
-import { format, formatDate } from "date-fns";
+import { formatDate } from "date-fns";
 
 type Product = Tables<"products">;
 type Price = Tables<"prices">;
