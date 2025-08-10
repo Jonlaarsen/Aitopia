@@ -12,7 +12,12 @@ const page = async () => {
         Here you can see all the images you have made. Click on an image to view
         details.
       </p>
-      <GalleryComponent images={images || []} />
+      <GalleryComponent
+        images={(images || []).filter(
+          (img): img is typeof img & { url: string } =>
+            typeof img.url === "string"
+        )}
+      />
     </section>
   );
 };
