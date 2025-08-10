@@ -135,7 +135,6 @@ const Pricing = ({
   const currentPath = usePathname();
 
   console.log(products);
-  3;
 
   const handleStripeCheckout = async (price: Price) => {
     // console.log("handle strip checkout function", price);

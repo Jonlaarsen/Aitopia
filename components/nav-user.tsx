@@ -1,18 +1,25 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { BadgeCheck, ChevronsUpDown, CreditCard } from "lucide-react";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useGeneratedStore } from "@/store/useGeneratedStore";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import LogoutButton from "./authentication/LogoutButton";
+import Link from "next/link";
 
 export function NavUser({
   user,
@@ -22,7 +29,7 @@ export function NavUser({
     email: string;
   };
 }) {
-  const { isMobile } = useGeneratedStore();
+  const { isMobile } = useSidebar();
 
   return (
     <SidebarMenu>

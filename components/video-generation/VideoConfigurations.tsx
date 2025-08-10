@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
   Select,
@@ -11,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Slider } from "../ui/slider";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
 import {
@@ -24,9 +21,7 @@ import { BadgeInfoIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useVideoStore } from "@/store/useVideoStore";
-import { useState } from "react";
-import { toast } from "sonner";
+import useVideoStore from "@/store/useVideoStore";
 
 export const VideoGeneratorFormSchema = z.object({
   prompt: z.string().min(1, "Prompt is required"),

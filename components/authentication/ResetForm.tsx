@@ -13,11 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { resetPassword } from "@/app/actions/auth-actions";
-import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -48,8 +46,10 @@ const ResetForm = ({ className }: { className?: string }) => {
         });
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to send reset email";
-      toast.error(errorMessage);
+      const errorMessage = error instanceof Error ? error.message : "There is an error sending the email!";
+      toast.error(errorMessage, {
+        id: toastId,
+      });
     }
   }
 

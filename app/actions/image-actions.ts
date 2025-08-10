@@ -1,9 +1,9 @@
 "use server"
-import { file, success, z } from "zod";
+//@typescript-eslint/no-explicit-any
+import {  z } from "zod";
 import { ImageGeneratorFormSchema } from "@/components/image-generation/Configurations"
 import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
 import { Database } from "@database.types";
 import {imageMeta} from "image-meta";
 import { randomUUID } from "crypto";
@@ -53,15 +53,15 @@ try {
             success:true,
             data: output,
         }
-
-} catch (error: unknown) {
-    console.error("Image generation error:", error);
+//@typescript-eslint/no-unused-vars
+}catch(error: unknown){
     return {
-      error: "Failed to generate image",
-      success: false,
-      data: null,
-    };
-  }
+        
+        error: "failed to generate image",
+        success:false,
+        data:null,
+}
+}
 
 
 }

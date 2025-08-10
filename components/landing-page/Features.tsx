@@ -2,7 +2,7 @@
 import React from "react";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import SpotlightCard from "../ui/spotlight-card";
-import { Code, ImageIcon, Palette, Video } from "lucide-react";
+import { Code, Image, Palette, Zap } from "lucide-react";
 import { motion } from "motion/react";
 
 const Features = () => {
@@ -40,10 +40,7 @@ const Features = () => {
           <div className="flex h-full flex-col">
             <div className="flex items-center gap-4">
               <div className="rounded-xl bg-primary/10 p-3">
-                <ImageIcon
-                  className="h-8 w-8 text-zinc-800"
-                  strokeWidth={1.5}
-                />
+                <Image className="h-8 w-8 text-primary" strokeWidth={1.5} />
               </div>
               <div className="space-y-1">
                 <h3 className="text-xl font-medium">AI Images</h3>
@@ -71,7 +68,7 @@ const Features = () => {
           <div className="flex h-full flex-col">
             <div className="flex items-center gap-4">
               <div className="rounded-xl bg-indigo-500/10 p-3">
-                <Video className="h-8 w-8 text-indigo-500" strokeWidth={1.5} />
+                <Zap className="h-8 w-8 text-indigo-500" strokeWidth={1.5} />
               </div>
               <div className="space-y-1">
                 <h3 className="text-xl font-medium">AI videos</h3>
@@ -107,17 +104,17 @@ const Features = () => {
                 <Palette className="h-8 w-8 text-rose-500" strokeWidth={1.5} />
               </div>
               <div className="space-y-1">
-                <h3 className="text-xl font-medium">Advanced AI Models</h3>
+                <h3 className="text-xl font-medium">Animated Spotlight</h3>
                 <div className="inline-flex items-center rounded-lg bg-rose-500/10 px-3 py-1 text-sm text-rose-500">
-                  State-of-the-Art Technology
+                  Interactive Animation
                 </div>
               </div>
             </div>
             <div className="mt-4">
               <p className="text-muted-foreground">
-                Access cutting-edge AI models including Flux and seedance.
-                Choose from multiple models to get the perfect style and quality
-                for your creative vision.
+                Watch as the spotlight comes alive with smooth animations,
+                creating an immersive experience that responds to user
+                interaction in real-time.
               </p>
             </div>
           </div>
@@ -138,19 +135,17 @@ const Features = () => {
                 <Code className="h-8 w-8 text-green-500" strokeWidth={1.5} />
               </div>
               <div className="space-y-1">
-                <h3 className="text-xl font-medium">
-                  Smart Gallery Management
-                </h3>
+                <h3 className="text-xl font-medium">Custom Configuration</h3>
                 <div className="inline-flex items-center rounded-lg bg-green-500/10 px-3 py-1 text-sm text-green-500">
-                  Organized & Efficient
+                  Advanced Settings
                 </div>
               </div>
             </div>
             <div className="mt-4">
               <p className="text-muted-foreground">
-                Keep your AI-generated content organized with intelligent
-                dashboards and tabs. Export, share, and manage your creations
-                with powerful tools.
+                Fully customizable spotlight with precise control over size,
+                opacity, and glow effects to match your design requirements
+                perfectly.
               </p>
             </div>
           </div>

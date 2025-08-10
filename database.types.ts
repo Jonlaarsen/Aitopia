@@ -61,6 +61,7 @@ export type Database = {
       }
       generated_images: {
         Row: {
+          url: string
           aspect_ratio: string | null
           created_at: string
           guidance: number | null

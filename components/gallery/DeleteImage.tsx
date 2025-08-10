@@ -33,7 +33,7 @@ const DeleteImage = ({
   const handleDelete = async () => {
     toast.loading("Deleting image...", { id: toastId });
 
-    const { error } = await deleteImage(imageId, imageName);
+    const { error, success } = await deleteImage(Number(imageId), imageName);
     if (error) {
       toast.error("Failed to delete image, please try again", { id: toastId });
     } else if (success) {

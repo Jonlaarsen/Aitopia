@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { CreditCard, Image, Wand2Icon } from "lucide-react";
@@ -16,13 +15,7 @@ const QuickActions = () => {
         </Button>
         <Button asChild variant={"outline"} className="w-full">
           <Link href={"/image-gallery"}>
-            <Image
-              src={action.icon}
-              alt={`${action.title} icon`}
-              width={24}
-              height={24}
-              className="h-6 w-6"
-            />
+            <Image className="h-4 w-4 mr-2" />
             View Gallery
           </Link>
         </Button>

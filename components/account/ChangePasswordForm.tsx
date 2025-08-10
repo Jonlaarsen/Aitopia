@@ -64,7 +64,7 @@ const ChangePasswordForm = ({ className }: { className?: string }) => {
         redirect("/login");
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "An error occurred while changing password";
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
       toast.error(errorMessage, { id: toastId });
     } finally {
       setLoading(false);

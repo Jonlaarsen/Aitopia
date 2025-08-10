@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { Download, Share2, Heart } from "lucide-react";
+import { Download } from "lucide-react";
 import { Badge } from "../ui/badge";
 import DeleteImage from "./DeleteImage";
 

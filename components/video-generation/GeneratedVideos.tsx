@@ -11,8 +11,9 @@ import {
 import useVideoStore from "@/store/useVideoStore";
 
 const GeneratedVideos = () => {
-  const { videos, loading: isLoading } = useVideoStore();
-
+  const videos = useVideoStore((state) => state.videos);
+  // Remove unused loading variable
+  
   if (videos.length === 0) {
     return (
       <Card className="w-full max-w-xl 2xl:max-w-2xl bg-zinc-100 text-black">

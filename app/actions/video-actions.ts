@@ -1,4 +1,6 @@
 "use server"
+//@typescript-eslint/no-explicit-any
+
 import { z } from "zod";
 import Replicate from "replicate";
 import { createClient } from "@/lib/supabase/server";

@@ -55,12 +55,11 @@ const useVideoStore = create<VideoState>((set) => ({
       await storeVideos(dataWithUrl);
       toast.success("Video stored successfully!", { id: toastId });
 
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to generate video";
-      console.error("Video generation error:", errorMessage);
+    } catch (error: any) {
+      console.error(error);
       set({
         loading: false,
-        error: errorMessage
+        error: "Failed to generate video, please try again"
       });
       toast.error("Failed to generate video", { id: toastId });
     }
