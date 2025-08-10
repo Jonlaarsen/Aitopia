@@ -16,10 +16,6 @@ export default async function Home() {
     getProducts(supabase), // gets all the active products and details
   ]);
 
-  if (!user) {
-    return redirect("/dashboard");
-  }
-
   return (
     <main className="flex flex-col min-h-screen items-center justify-center">
       <Navbar />
