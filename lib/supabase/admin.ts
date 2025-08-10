@@ -232,6 +232,7 @@ const manageSubscriptionStatusChange = async (
     expand: ['default_payment_method']
   }) as Stripe.Subscription;
   // Upsert the latest status of the subscription object.
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const subscriptionData: TablesInsert<'subscriptions'> = {
     id: subscription.id,
     user_id: uuid,
@@ -240,6 +241,7 @@ const manageSubscriptionStatusChange = async (
     price_id: subscription.items.data[0].price.id,
     //TODO check quantity on subscription
   //@ts-expect-error - Stripe subscription quantity property access
+  
     quantity: subscription.quantity,
     cancel_at_period_end: subscription.cancel_at_period_end,
     cancel_at: subscription.cancel_at
@@ -267,6 +269,7 @@ const manageSubscriptionStatusChange = async (
       ? toDateTime(subscription.trial_end).toISOString()
       : null
   };
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   const { error: upsertError } = await supabaseAdmin
     .from('subscriptions')
