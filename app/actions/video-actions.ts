@@ -46,7 +46,7 @@ export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFo
       success: true,
       data: output,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Video generation error:", error);
     return {
       error: "Failed to generate video",

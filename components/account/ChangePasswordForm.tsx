@@ -63,8 +63,9 @@ const ChangePasswordForm = ({ className }: { className?: string }) => {
         toast.success("Changed password successfully", { id: toastId });
         redirect("/login");
       }
-    } catch (error: any) {
-      toast.error(String(error?.message), { id: toastId });
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred while changing password";
+      toast.error(errorMessage, { id: toastId });
     } finally {
       setLoading(false);
     }
