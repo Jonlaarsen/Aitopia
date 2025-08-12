@@ -80,7 +80,7 @@ const renderPricingButton = ({
         <Button
           className="mt-8 w-full font-semibold"
           variant={"outline"}
-          onClick={() => handleStripePortalRequest}
+          onClick={() => handleStripePortalRequest()}
         >
           Switch Plans
         </Button>

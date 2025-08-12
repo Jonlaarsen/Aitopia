@@ -8,7 +8,7 @@ const QuickActions = () => {
     <div className="space-y-0  h-full w-full">
       <div className="flex flex-col  gap-2">
         <Button asChild className="w-full">
-          <Link href={"/image-generation"}>
+          <Link href={"/image-generator"}>
             <Wand2Icon className="h-4 w-4 mr-2" />
             Generate image
           </Link>
