@@ -1,6 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import ContactFormModal from "./ContactFormModal";
 
 const Footer = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <footer className="w-full bg-zinc-900 text-zinc-300 border-t-4 border-purple-400/20">
       <div className="max-w-7xl mx-auto px-10 py-12">
@@ -60,6 +64,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                  onClick={() => setIsContactModalOpen(true)}
                   href="#contact"
                   className="text-zinc-400 hover:text-white transition-colors"
                 >
@@ -86,6 +91,10 @@ const Footer = () => {
           </p>
         </div>
       </div>
+      <ContactFormModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </footer>
   );
 };

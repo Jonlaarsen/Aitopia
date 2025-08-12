@@ -30,15 +30,66 @@ export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFo
     };
   }
 
-  // Seedance Pro specific parameters
-  const modelInput = {
+  // Validate Veo 3 Fast duration
+  if (input.model === "google/veo-3-fast" && input.duration !== 8) {
+    return {
+      error: "Google Veo 3 Fast only supports 8-second videos",
+      success: false,
+      data: null,
+    };
+  }
+
+  // Calculate required credits based on model
+  let requiredCredits = 0;
+  if (input.model === "google/veo-3-fast") {
+    requiredCredits = 40; // Fixed 40 credits for Veo 3 Fast
+  } else {
+    // Seedance Pro: calculate based on duration and resolution
+    if (input.resolution === '480p') {
+      requiredCredits = input.duration * 1; // 1 credit per second for 480p
+    } else if (input.resolution === '720p') {
+      requiredCredits = input.duration * 2; // 2 credits per second for 720p
+    } else if (input.resolution === '1080p') {
+      requiredCredits = input.duration * 4; // 4 credits per second for 1080p
+    } else {
+      requiredCredits = input.duration * 1; // Default to 1 credit per second
+    }
+  }
+
+  // Check if user has enough credits
+  if (credits.image_generation_count < requiredCredits) {
+    return {
+      error: `Insufficient credits. You need ${requiredCredits} credits for this generation.`,
+      success: false,
+      data: null,
+    };
+  }
+
+  // Model-specific parameters
+  let modelInput: any = {
     prompt: input.prompt,
-    duration: input.duration,
-    fps: input.fps,
-    resolution: input.resolution,
-    aspect_ratio: input.aspect_ratio,
-    // Seedance Pro doesn't use camera_fixed parameter
   };
+
+  if (input.model === "google/veo-3-fast") {
+    // Veo 3 Fast parameters - force duration to 8
+    modelInput = {
+      prompt: input.prompt,
+      duration: 8, // Always 8 seconds for Veo 3 Fast
+      fps: input.fps,
+      resolution: input.resolution,
+      aspect_ratio: input.aspect_ratio,
+    };
+  } else {
+    // Seedance Pro parameters
+    modelInput = {
+      prompt: input.prompt,
+      duration: input.duration,
+      fps: input.fps,
+      resolution: input.resolution,
+      aspect_ratio: input.aspect_ratio,
+      // Seedance Pro doesn't use camera_fixed parameter
+    };
+  }
 
   try {
     const output = await replicate.run(input.model as `${string}/${string}` | `${string}/${string}:${string}`, { input: modelInput });

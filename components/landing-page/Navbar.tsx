@@ -1,8 +1,10 @@
+"use client";
 import { Menu, Sparkle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { motion } from "motion/react";
 
 const NavItems = () => {
   return (
@@ -46,14 +48,19 @@ const NavItems = () => {
 
 const Navbar = () => {
   return (
-    <div className="top-0 w-full fixed bg-white/80 shadow-2xl overflow-hidden z-50 py-4 px-8 backdrop-blur-md">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="top-0 w-full fixed bg-white/80 shadow-2xl overflow-hidden z-40 py-4 px-8 backdrop-blur-md"
+    >
       <header className="container mx-auto items-center justify-between flex">
         <div className="flex items-center justify-between font-bold text-lg">
           <div className="bg-gradient-to-b from-purple-600 to-pink-400 p-2 rounded-2xl mr-2">
             <Sparkle className="h-7 w-7 text-white" />
           </div>
 
-          <span>AItopia</span>
+          <span>Aitopia</span>
         </div>
         <nav className="md:flex hidden justify-center items-center ml-auto space-x-4 text-sm">
           <NavItems />
@@ -73,7 +80,7 @@ const Navbar = () => {
           </Sheet>
         </div>
       </header>
-    </div>
+    </motion.div>
   );
 };
 

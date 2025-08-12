@@ -57,12 +57,12 @@ const RecentImages = ({ images }: RecentImagesProps) => {
                     <Image
                       width={image.width || 100}
                       height={image.height || 100}
-                      className="object-cover"
+                      className="object-cover aspect-square"
                       src={image.url || ""}
                       alt={image.prompt || "AI generated image"}
                     />
                   </div>
-                  <Badge className="text-xs font-medium line-clamp-2 ">
+                  <Badge className="text-xs font-medium max-w-xs truncate line-clamp-2 ">
                     Prompt: {image.prompt}
                   </Badge>
                 </div>

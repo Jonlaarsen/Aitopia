@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-// import ContactFormModal from "./ContactFormModal";
+import ContactFormModal from "./ContactFormModal";
 
 interface FAQItem {
   question: string;
@@ -22,7 +22,7 @@ interface FAQItem {
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  // const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const faqData: FAQItem[] = [
     {
@@ -69,7 +69,7 @@ const FAQ = () => {
   return (
     <section
       id="faq"
-      className="relative w-full bg-gradient-to-br from-purple-50 to-pink-50 via-zinc-50 via-50% border-y-4 border-purple-400/20 h-full py-22 flex flex-col items-center justify-center overflow-hidden"
+      className="relative w-full bg-gradient-to-br from-purple-50 to-pink-50 via-zinc-50 via-50% border-y-4 border-purple-400/20 h-full py-22 flex flex-col items-center justify-center"
     >
       {/* Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.9)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.9)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
@@ -149,19 +149,29 @@ const FAQ = () => {
         ))}
       </div>
 
-      <div className="text-center mt-16 px-10">
+      <div className="text-center mt-16 px-10 relative z-20">
         <p className="text-zinc-600 mb-4">
           Still have questions? We&apos;re here to help!
         </p>
         <button
-          // onClick={() => setIsContactModalOpen(true)}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
+          onClick={() => {
+            console.log("Contact button clicked!"); // Debug log
+            setIsContactModalOpen(true);
+          }}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 cursor-pointer"
+          type="button"
         >
           <MessageCircle className="h-4 w-4" />
           Contact Support
         </button>
-        {/* {isContactModalOpen && <ContactFormModal isOpen={true} />} */}
       </div>
+
+      {isContactModalOpen && (
+        <ContactFormModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+        />
+      )}
     </section>
   );
 };
