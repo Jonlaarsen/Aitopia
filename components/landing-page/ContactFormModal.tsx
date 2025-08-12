@@ -105,7 +105,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
                 <div>
                   <h2 className="text-xl font-semibold">Contact Support</h2>
                   <p className="text-purple-100 text-sm">
-                    We'll get back to you soon
+                    We&apos;ll get back to you soon
                   </p>
                 </div>
               </div>
