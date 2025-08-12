@@ -66,8 +66,8 @@ export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFo
   }
 
   // Model-specific parameters
-  //@typescript-eslint/no-explicit-any
-  let modelInput: any = {
+/* eslint-disable  no-explicit-any */  
+let modelInput: any = {
     prompt: input.prompt,
   };
 
