@@ -1,5 +1,4 @@
 "use server"
-//@typescript-eslint/no-explicit-any
 
 import { z } from "zod";
 import Replicate from "replicate";
@@ -66,7 +65,7 @@ export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFo
   }
 
   // Model-specific parameters
-/* eslint-disable  no-explicit-any */  
+// eslint-disable-next-line no-explicit-any, @typescript-eslint/no-explicit-any
 let modelInput: any = {
     prompt: input.prompt,
   };

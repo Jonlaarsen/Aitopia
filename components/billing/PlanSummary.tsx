@@ -77,7 +77,6 @@ const PlanSummary = ({
       </Card>
     );
   }
-  console.log(subscription);
 
   const {
     products: subscriptionProduct,
