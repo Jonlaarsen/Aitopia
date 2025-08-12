@@ -1,5 +1,4 @@
 "use server"
-//@typescript-eslint/no-explicit-any
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 

@@ -65,8 +65,15 @@ export async function generateVideoAction(input: z.infer<typeof VideoGeneratorFo
   }
 
   // Model-specific parameters
-// eslint-disable-next-line no-explicit-any, @typescript-eslint/no-explicit-any
-let modelInput: any = {
+  type ModelInput = {
+    prompt: string;
+    duration?: number;
+    fps?: number;
+    resolution?: string;
+    aspect_ratio?: string;
+  };
+
+  let modelInput: ModelInput = {
     prompt: input.prompt,
   };
 

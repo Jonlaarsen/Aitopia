@@ -1,5 +1,4 @@
 "use server"
-//@typescript-eslint/no-explicit-any
 
 import { Tables } from "@/database.types";
 import { createClient } from "@/lib/supabase/server";

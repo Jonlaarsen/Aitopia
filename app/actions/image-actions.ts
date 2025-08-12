@@ -1,5 +1,4 @@
 "use server"
-//@typescript-eslint/no-explicit-any
 import {  z } from "zod";
 import { ImageGeneratorFormSchema } from "@/components/image-generation/Configurations"
 import Replicate from "replicate";
