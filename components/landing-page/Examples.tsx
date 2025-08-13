@@ -126,7 +126,7 @@ const Examples = () => {
                         <span className="text-zinc-700 font-semibold">
                           Prompt:
                         </span>{" "}
-                        "{image.prompt}"
+                        `&quot;`{image.prompt}`&quot;`
                       </p>
                     </div>
                   </div>
@@ -199,8 +199,8 @@ const Examples = () => {
 
                     <div className="pt-2">
                       <p className="text-xs text-zinc-500 font-mono bg-zinc-100 p-2 rounded border">
-                        <span className="font-semibold">Prompt:</span> "
-                        {video.prompt}"
+                        <span className="font-semibold">Prompt:</span> `&quot;`
+                        {video.prompt}`&quot;`
                       </p>
                     </div>
                   </div>
