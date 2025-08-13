@@ -57,7 +57,7 @@ export default function ConfirmEmailPage() {
                 <Sparkles className="w-5 h-5 text-blue-500" />
               </div>
               <p className="text-gray-600 text-base">
-                We`&apos;`ve sent you a confirmation email
+                We&apos;ve sent you a confirmation email
               </p>
             </div>
           </CardHeader>
@@ -86,7 +86,7 @@ export default function ConfirmEmailPage() {
                   <div className="flex items-center space-x-2 mb-3">
                     <AlertCircle className="w-4 h-4 text-purple-600" />
                     <h4 className="font-semibold text-purple-900 text-sm">
-                      Didn`&apos;`t receive the email?
+                      Didn&apos;t receive the email?
                     </h4>
                   </div>
                   <ul className="text-xs text-purple-800 space-y-1">

@@ -125,8 +125,8 @@ const Examples = () => {
                       <p className="text-xs text-zinc-500 font-mono bg-zinc-100 p-2 rounded border">
                         <span className="text-zinc-700 font-semibold">
                           Prompt:
-                        </span>{" "}
-                        `&quot;`{image.prompt}`&quot;`
+                        </span>
+                        &quot;{image.prompt}&quot;
                       </p>
                     </div>
                   </div>
@@ -199,8 +199,8 @@ const Examples = () => {
 
                     <div className="pt-2">
                       <p className="text-xs text-zinc-500 font-mono bg-zinc-100 p-2 rounded border">
-                        <span className="font-semibold">Prompt:</span> `&quot;`
-                        {video.prompt}`&quot;`
+                        <span className="font-semibold">Prompt:</span>&quot;
+                        {video.prompt}&quot;
                       </p>
                     </div>
                   </div>
@@ -226,7 +226,7 @@ const Examples = () => {
           </div>
           <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
             Join now and get{" "}
-            <span className="text-white font-bold">6 free credits</span> just
+            <span className="text-white font-bold">5 free credits</span> just
             for signing up! Limited time offer!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

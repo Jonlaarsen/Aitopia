@@ -52,8 +52,8 @@ export default function NotFound() {
           </h2>
 
           <p className="text-gray-600 text-base leading-relaxed max-w-sm mx-auto">
-            Oops! The page you`&apos;`re looking for doesn`&apos;`t exist. It
-            might have been moved, deleted or you entered the wrong URL.
+            Oops! The page you&apos;re looking for doesn&apos;t exist. It might
+            have been moved, deleted or you entered the wrong URL.
           </p>
         </div>
 
