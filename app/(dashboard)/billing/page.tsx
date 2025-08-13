@@ -20,6 +20,8 @@ const page = async () => {
 
   const { data: credits } = await getCredits();
 
+  console.log(credits);
+
   return (
     <section className="container mx-auto space-y-8">
       <div>
@@ -35,13 +37,23 @@ const page = async () => {
           user={user}
           products={products || []}
         />
-        {subscription.status === "active" && (
+        {(subscription?.status === "active" && (
           <Pricing
             showInterval={false}
             user={user}
             products={products ?? []}
             subscription={subscription}
             activeProduct={
+              subscription?.prices?.products?.name.toLowerCase() || "pro"
+            }
+          />
+        )) || (
+          <Pricing
+            showInterval={false}
+            user={user}
+            products={products ?? []}
+            subscription={subscription}
+            mostPopularProduct={
               subscription?.prices?.products?.name.toLowerCase() || "pro"
             }
           />

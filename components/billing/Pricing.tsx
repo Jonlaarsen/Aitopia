@@ -134,8 +134,6 @@ const Pricing = ({
   const router = useRouter();
   const currentPath = usePathname();
 
-  console.log(products);
-
   const handleStripeCheckout = async (price: Price) => {
     // console.log("handle strip checkout function", price);
     if (!user) {
@@ -223,7 +221,7 @@ const Pricing = ({
                     ) : null}
                     {product.name?.toLowerCase() ===
                     mostPopularProduct.toLowerCase() ? (
-                      <Badge className="border font-semibold rounded-full bg-purple-600 text-white">
+                      <Badge className="border font-semibold rounded-full bg-zinc-700 text-white">
                         Most Popular
                       </Badge>
                     ) : null}

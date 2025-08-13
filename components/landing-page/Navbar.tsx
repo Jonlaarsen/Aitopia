@@ -16,11 +16,18 @@ const NavItems = () => {
         Features
       </Link>
       <Link
+        href="#examples"
+        className=" font-medium hover:underline underline-offset-2"
+      >
+        Examples
+      </Link>
+      <Link
         href="#pricing"
         className=" font-medium hover:underline underline-offset-2"
       >
         Pricing
       </Link>
+
       <Link
         href="#faq"
         className=" font-medium hover:underline underline-offset-2"

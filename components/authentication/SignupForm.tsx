@@ -18,7 +18,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/actions/auth-actions";
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[\w!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
 
 const formSchema = z
   .object({
@@ -29,7 +29,7 @@ const formSchema = z
       .min(8, { message: "Password must be at least 8 characters long" })
       .regex(passwordRegex, {
         message:
-          "Password must contain at least 8 characters and atleast one uppercase letter, one lowercase letter, and one number",
+          "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
       }),
     confirm_password: z.string({ error: "Confirm password is required" }),
   })

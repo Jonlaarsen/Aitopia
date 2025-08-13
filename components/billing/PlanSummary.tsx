@@ -34,7 +34,7 @@ const PlanSummary = ({
   user,
   products,
 }: PlanSummaryProps) => {
-  if (!credits || !subscription || subscription.status !== "active") {
+  if (!subscription || subscription.status !== "active") {
     return (
       <Card className="max-w-5xl">
         <CardContent className="px-5 py-4">
@@ -44,14 +44,14 @@ const PlanSummary = ({
               className="rounded-full font-bold bg-zinc-200"
               variant="secondary"
             >
-              No Plan
+              Fremium Plan
             </Badge>
           </h3>
           <div className="grid grid-cols-8 gap-4">
             <div className="col-span-5 flex flex-col pr-12">
               <div className="flex-1 text-sm flex w-full justify-between items-center pb-2">
                 <span className="font-bold">Credits left: </span>
-                <span>0 remaining</span>
+                <span>{credits?.image_generation_count}</span>
               </div>
               <div>
                 <Progress value={0} className="w-full h-2" />
@@ -89,8 +89,10 @@ const PlanSummary = ({
     minimumFractionDigits: 0,
   }).format((unit_amount || 0) / 100);
 
-  const imageGenCounter = credits.image_generation_count ?? 0;
-  const maxImageGenCounter = credits.max_image_generation_count ?? 0;
+  const imageGenCounter = credits?.image_generation_count ?? 0;
+  const maxImageGenCounter = credits?.max_image_generation_count ?? 0;
+
+  console.log(imageGenCounter, maxImageGenCounter, "hello");
 
   return (
     <div>

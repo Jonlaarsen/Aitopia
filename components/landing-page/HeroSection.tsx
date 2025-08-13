@@ -112,7 +112,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
-        className="relative z-20 mx-auto max-w-2xl py-8 text-center text-base text-neutral-900 font-semibold md:text-base"
+        className="relative z-20 px-2 mx-auto max-w-2xl py-8 text-center text-base text-neutral-900 font-semibold md:text-base"
       >
         Bring your imagination to life with AI. <br /> Simply describe what you
         see in your mind, and our powerful image generator transforms your words
@@ -128,7 +128,7 @@ const HeroSection = () => {
       >
         <Link href="/login?state=signup">
           <Button
-            className="bg-purple-500/80 sm:bg-purple-500 hover:bg-purple-600 font-bold text-lg"
+            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 font-bold text-lg"
             size={"lg"}
           >
             Sign Up
