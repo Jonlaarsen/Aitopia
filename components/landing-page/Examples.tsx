@@ -73,7 +73,7 @@ const Examples = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.2 }}
         viewport={{ once: true }}
-        className="w-full max-w-7xl px-10 pt-20 relative z-10"
+        className="w-full  px-10 pt-20 relative z-10"
       >
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -143,7 +143,7 @@ const Examples = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.4 }}
         viewport={{ once: true }}
-        className="w-full max-w-7xl px-10 pt-20 relative z-10"
+        className="w-full px-10 pt-20 relative z-10"
       >
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -159,7 +159,7 @@ const Examples = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid justify-center items-center gap-6 md:grid-cols-2">
           {exampleVideos.map((video, index) => (
             <motion.div
               key={video.id}
