@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { motion } from "motion/react";
+import { Sparkles } from "lucide-react";
 
 const images = [
   "https://img.freepik.com/free-vector/ai-technology-microchip-background-vector-digital-transformation-concept_53876-112222.jpg",
@@ -124,22 +125,28 @@ const HeroSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
         viewport={{ once: true }}
-        className="relative z-20 flex flex-wrap items-center justify-center gap-4 pt-4 "
+        className="relative z-20 flex flex-col items-center justify-center gap-4 pt-4 "
       >
         <Link href="/login?state=signup">
           <Button
-            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 font-bold text-lg"
+            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 uppercase font-bold text-lg"
             size={"lg"}
           >
-            Sign Up
+            {" "}
+            <Sparkles strokeWidth={3} />
+            Sign up now and get 5{" "}
+            <span className="underline underline-offset-2">free</span> credits!
+            <Sparkles strokeWidth={3} />
           </Button>
         </Link>
 
-        <Link
-          href="#faq"
-          className="text-zinc-800 font-semibold text-lg underline underline-offset-4 decoration-purple-500 decoration-[2px] hover:scale-110"
-        >
-          Learn More
+        <Link href="#faq">
+          <Button
+            variant={"outline"}
+            className="text-purple-800  bg-transparent border-2 border-purple-500"
+          >
+            Learn More
+          </Button>
         </Link>
       </motion.div>
 
