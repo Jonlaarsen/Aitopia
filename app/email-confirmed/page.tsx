@@ -63,7 +63,7 @@ export default function EmailConfirmedPage() {
                 asChild
                 className="w-full bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 border-0"
               >
-                <Link href="/dashboard">
+                <Link href="/login">
                   <ArrowRight className="w-4 h-4 mr-2" />
                   Go to Login
                 </Link>

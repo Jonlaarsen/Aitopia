@@ -14,11 +14,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { signup } from "@/app/actions/auth-actions";
+import Link from "next/link";
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[\w!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[\w!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
 
 const formSchema = z
   .object({
@@ -40,6 +42,7 @@ const formSchema = z
 
 const SignupForm = ({ className }: { className?: string }) => {
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const toastId = useId();
 
@@ -68,9 +71,61 @@ const SignupForm = ({ className }: { className?: string }) => {
       setLoading(false);
     } else {
       toast.success("Signed up successfully", { id: toastId });
-      window.location.href = "/login";
+      setShowSuccess(true);
     }
     setLoading(false);
+  }
+
+  if (showSuccess) {
+    return (
+      <div
+        className={cn(
+          "grid gap-4 w-full bg-white rounded-2xl p-8 border border-black",
+          className
+        )}
+      >
+        <div className="text-center space-y-6">
+          <div className="mx-auto w-20 h-20 bg-gradient-to-br from-zinc-800 via-indigo-500 to-slate-600 rounded-full flex items-center justify-center shadow-lg">
+            <Mail className="w-10 h-10 text-white" />
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Check Your Email!
+            </h2>
+            <p className="text-gray-600">
+              We've sent you a confirmation email. Please check your inbox and
+              click the link to verify your account.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+            <div className="flex items-center space-x-2 text-blue-700">
+              <Mail className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                Verification email sent
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <Button
+              asChild
+              variant="outline"
+              className="flex-1 border-gray-300 hover:bg-gray-50"
+            >
+              <Link href="/login">Login</Link>
+            </Button>
+            <Button
+              asChild
+              className="flex-1 bg-gradient-to-r from-zinc-600 via-slate-600 to-zinc-600 hover:from-zinc-700 hover:via-slate-700 hover:to-zinc-700 text-white"
+            >
+              <Link href="/">Home</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
