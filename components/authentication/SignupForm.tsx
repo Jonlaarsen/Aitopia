@@ -40,7 +40,13 @@ const formSchema = z
     path: ["confirm_password"],
   });
 
-const SignupForm = ({ className, onSwitchToLogin }: { className?: string; onSwitchToLogin?: () => void }) => {
+const SignupForm = ({
+  className,
+  onSwitchToLogin,
+}: {
+  className?: string;
+  onSwitchToLogin?: () => void;
+}) => {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -94,8 +100,8 @@ const SignupForm = ({ className, onSwitchToLogin }: { className?: string; onSwit
               Check Your Email!
             </h2>
             <p className="text-gray-600">
-              We've sent you a confirmation email. Please check your inbox and
-              click the link to verify your account.
+              We&apos;ve sent you a confirmation email. Please check your inbox
+              and click the link to verify your account.
             </p>
           </div>
 
@@ -109,13 +115,13 @@ const SignupForm = ({ className, onSwitchToLogin }: { className?: string; onSwit
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                         <Button
-               variant="outline"
-               className="flex-1 border-gray-300 hover:bg-gray-50"
-               onClick={onSwitchToLogin}
-             >
-               Login
-             </Button>
+            <Button
+              variant="outline"
+              className="flex-1 border-gray-300 hover:bg-gray-50"
+              onClick={onSwitchToLogin}
+            >
+              Login
+            </Button>
             <Button
               asChild
               className="flex-1 bg-gradient-to-r from-zinc-600 via-slate-600 to-zinc-600 hover:from-zinc-700 hover:via-slate-700 hover:to-zinc-700 text-white"

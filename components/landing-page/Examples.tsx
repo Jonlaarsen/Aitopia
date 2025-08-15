@@ -124,7 +124,7 @@ const Examples = () => {
                     <div className="pt-2">
                       <p className="text-xs text-zinc-500 font-mono bg-zinc-100 p-2 rounded border">
                         <span className="text-zinc-700 font-semibold">
-                          Prompt:
+                          Prompt:{" "}
                         </span>
                         &quot;{image.prompt}&quot;
                       </p>
@@ -183,6 +183,7 @@ const Examples = () => {
                       loop={true}
                       muted={true}
                       src={video.src}
+                      playsInline={true}
                       className="h-full w-full"
                     />
                   </div>
@@ -199,7 +200,10 @@ const Examples = () => {
 
                     <div className="pt-2">
                       <p className="text-xs text-zinc-500 font-mono bg-zinc-100 p-2 rounded border">
-                        <span className="font-semibold">Prompt:</span>&quot;
+                        <span className="text-zinc-700 font-semibold">
+                          Prompt:{" "}
+                        </span>
+                        &quot;
                         {video.prompt}&quot;
                       </p>
                     </div>
