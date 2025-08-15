@@ -40,7 +40,7 @@ const AuthForm = ({ state }: { state: string }) => {
       )}
       {mode === "signup" && (
         <>
-          <SignupForm />
+          <SignupForm onSwitchToLogin={() => setMode("login")} />
           <div className="flex sm:flex-row flex-col justify-evenly ">
             <Button variant={"link"} onClick={() => setMode("login")}>
               Already have an account?
