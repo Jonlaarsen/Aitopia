@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronsUpDown, SparkleIcon } from "lucide-react";
+import { Aperture, ChevronsUpDown } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 
@@ -32,11 +32,11 @@ export async function AppSidebar({
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-            <SparkleIcon className="size-4" />
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full">
+            <Aperture className="size-5" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">AItopia</span>
+            <span className="truncate font-medium">Ai-topia</span>
             <span className="truncate text-xs">
               {data.user?.user_metadata.full_name}
             </span>

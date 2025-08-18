@@ -1,5 +1,5 @@
 "use client";
-import { Menu, Sparkle } from "lucide-react";
+import { Aperture, Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
@@ -62,12 +62,12 @@ const Navbar = () => {
       className="top-0 w-full fixed bg-white/80 shadow-2xl overflow-hidden z-40 py-4 px-8 backdrop-blur-md"
     >
       <header className="container mx-auto items-center justify-between flex">
-        <div className="flex items-center justify-between font-bold text-lg">
-          <div className="bg-gradient-to-b from-purple-600 to-pink-400 p-2 rounded-2xl mr-2">
-            <Sparkle className="h-7 w-7 text-white" />
+        <div className="flex items-center justify-between font-bold text-xl">
+          <div className="bg-gradient-to-b from-purple-600 to-pink-400 p-2 rounded-full mr-2">
+            <Aperture strokeWidth={2} className="h-7 w-7 text-white" />
           </div>
 
-          <span>Aitopia</span>
+          <span>Ai-topia</span>
         </div>
         <nav className="md:flex hidden justify-center items-center ml-auto space-x-4 text-sm">
           <NavItems />

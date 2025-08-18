@@ -98,8 +98,8 @@ const HeroSection = () => {
   return (
     <div className="relative  flex h-screen w-full  flex-col items-center justify-center overflow-hidden ">
       <motion.h2
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
         className="relative z-20 mx-auto max-w-4xl text-center text-4xl font-bold text-balance text-zinc-900 md:text-4xl lg:text-6xl"
       >
@@ -110,9 +110,9 @@ const HeroSection = () => {
         at a time.
       </motion.h2>
       <motion.h3
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.75 }}
         className="relative z-20 px-2 mx-auto max-w-2xl py-8 text-center text-base text-neutral-900 font-semibold md:text-base"
       >
         Bring your imagination to life with AI. <br /> Simply describe what you
@@ -123,13 +123,13 @@ const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 1, delay: 1 }}
         viewport={{ once: true }}
         className="relative z-20 flex flex-col items-center justify-center gap-4 pt-4 "
       >
         <Link href="/login?state=signup">
           <Button
-            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 uppercase font-bold text-lg"
+            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 uppercase font-bold text-sm md:text-2xl py-8 rounded-4xl"
             size={"lg"}
           >
             {" "}
@@ -143,7 +143,7 @@ const HeroSection = () => {
         <Link href="#faq">
           <Button
             variant={"outline"}
-            className="text-purple-800  bg-transparent border-2 border-purple-500"
+            className="text-purple-600  bg-transparent border-2 border-purple-600"
           >
             Learn More
           </Button>

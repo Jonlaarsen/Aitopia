@@ -1,5 +1,5 @@
 import AuthForm from "@/components/authentication/AuthForm";
-import { Sparkle } from "lucide-react";
+import { Aperture, Sparkle } from "lucide-react";
 import React from "react";
 
 interface SearchParams {
@@ -15,9 +15,9 @@ const page = async ({
   console.log(state);
   return (
     <div className="h-screen grid grid-cols-1 sm:grid-cols-2 relative">
-      <div className="hidden sm:block bg-[url('https://images.unsplash.com/photo-1517196084897-498e0abd7c2d?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover flex items-center justify-center">
-        <h1 className="absolute flex gap-2 bottom-5 left-5 text-2xl font-semibold text-white">
-          AItopia <Sparkle className="h-7" />
+      <div className="hidden h-full w-full sm:flex  bg-cover  items-center justify-center bg-[url('https://i.pinimg.com/originals/d8/e6/eb/d8e6eb6b345ada088e2448947c483ab4.gif')]">
+        <h1 className="flex items-center justify-center text-7xl font-semibold text-white">
+          Ai-topia <Aperture className="h-[5rem] w-[5rem]" />
         </h1>
       </div>
       <div className="bg-zinc-100  flex items-center justify-center h-full p-8 w-full">
