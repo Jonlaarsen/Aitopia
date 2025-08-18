@@ -36,7 +36,10 @@ export async function AppSidebar({
             <Aperture className="size-5" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">Ai-topia</span>
+            <h1 className="text-xl font-extrabold leading-tight ">
+              <span className="italic">H</span>Ai
+              <span className="italic">VEN</span>
+            </h1>
             <span className="truncate text-xs">
               {data.user?.user_metadata.full_name}
             </span>

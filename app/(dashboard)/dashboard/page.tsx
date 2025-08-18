@@ -20,7 +20,7 @@ export default async function Page() {
     <section className="container pb-10 sm:pb-0 mx-auto flex-1 space-y-6  pr-5">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold tracking-tight">
-          Welcome back, {user?.user_metadata.full_name}
+          Welcome back, <br /> {user?.user_metadata.full_name}
         </h2>
       </div>
       <StatsCards imageCount={imageCount} credits={credits} />
