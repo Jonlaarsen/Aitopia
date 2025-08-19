@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import { motion } from "motion/react";
-import { Sparkles } from "lucide-react";
+import { ArrowDownCircleIcon, Sparkles } from "lucide-react";
 
 const images = [
   "https://img.freepik.com/free-vector/ai-technology-microchip-background-vector-digital-transformation-concept_53876-112222.jpg",
@@ -127,27 +127,15 @@ const HeroSection = () => {
         viewport={{ once: true }}
         className="relative z-20 flex flex-col items-center justify-center gap-4 pt-4 "
       >
-        <Link href="/login?state=signup">
-          <Button
-            className="bg-purple-500 sm:bg-purple-500/80 hover:bg-purple-600 uppercase font-bold text-sm md:text-2xl py-8 rounded-4xl"
-            size={"lg"}
+        <div className="flex flex-col items-center justify-center gap-4 ">
+          <Link
+            className="bg-zinc-200/70 hover:bg-purple-200 transition-colors duration-2s00 px-3 py-1 rounded-full"
+            href="#features"
           >
-            {" "}
-            <Sparkles strokeWidth={3} />
-            Sign up now and get 5{" "}
-            <span className="underline underline-offset-2">free</span> credits!
-            <Sparkles strokeWidth={3} />
-          </Button>
-        </Link>
-
-        <Link href="#faq">
-          <Button
-            variant={"outline"}
-            className="text-purple-600  bg-transparent border-2 border-purple-600"
-          >
-            Learn More
-          </Button>
-        </Link>
+            Learn more!
+          </Link>
+          <ArrowDownCircleIcon className="animate-bounce" />
+        </div>
       </motion.div>
 
       {/* overlay */}

@@ -67,7 +67,7 @@ const Navbar = () => {
             <Aperture strokeWidth={2} className="h-7 w-7 text-white" />
           </div>
 
-          <h1 className="text-5xl font-extrabold leading-tight ">
+          <h1 className="text-4xl font-extrabold leading-tight ">
             <span className="italic">H</span>Ai
             <span className="italic">VEN</span>
           </h1>

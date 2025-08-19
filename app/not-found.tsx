@@ -7,6 +7,7 @@ import {
   AlertTriangle,
   Sparkles,
   Zap,
+  Aperture,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,38 +17,31 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 p-4 relative overflow-hidden">
-      {/* Aitopia Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-300/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-purple-200/10 to-blue-200/10 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
-      </div>
-
       <div className="w-full  max-w-md text-center relative z-10">
         {/* 404 Number with Aitopia styling */}
-        <div className="mb-6 relative">
-          <h1 className="text-7xl font-bold bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent leading-none relative">
-            404
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 blur-xl opacity-30 animate-pulse"></div>
-          </h1>
-          <div className="absolute -top-3 -right-3">
-            <Sparkles className="w-6 h-6 text-purple-400 animate-pulse" />
-          </div>
-          <div className="absolute -bottom-3 -left-3">
-            <Zap className="w-6 h-6 text-blue-400 animate-pulse animation-delay-1000" />
+        <div>
+          <div className="flex items-center justify-center font-bold text-xl mb-10">
+            <div className="bg-gradient-to-b from-purple-600 to-pink-400 p-3 rounded-full mr-2">
+              <Aperture strokeWidth={2} className="h-10 w-10 text-white" />
+            </div>
+
+            <h1 className="text-7xl font-extrabold leading-tight ">
+              <span className="italic">H</span>Ai
+              <span className="italic">VEN</span>
+            </h1>
           </div>
         </div>
 
         {/* Main Content */}
         <div className="space-y-4 mb-6">
           <div className="flex justify-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-xl relative">
-              <AlertTriangle className="w-8 h-8 text-white" />
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full blur-lg opacity-50 animate-pulse"></div>
+            <div className="p-4 bg-gradient-to-br from-purple-600 to-pink-400 rounded-full flex items-center justify-center shadow-xl relative">
+              <AlertTriangle className="w-12 h-12 text-white" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-400 rounded-full blur-lg opacity-50 animate-pulse"></div>
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-black to-zinc-900 bg-clip-text text-transparent">
             Page Not Found
           </h2>
 
@@ -61,7 +55,7 @@ export default function NotFound() {
         <div className="space-y-3">
           <Button
             onClick={() => router.back()}
-            className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 border-0 text-sm py-2"
+            className="w-full bg-gradient-to-r from-black to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 border-0 text-sm py-2"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Go Back

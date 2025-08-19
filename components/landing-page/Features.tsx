@@ -34,122 +34,79 @@ const Features = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
         viewport={{ once: true }}
-        className="grid gap-6 md:grid-cols-2 px-10 pt-20 relative z-10"
+        className="flex flex-col items-center gap-6 px-0  sm:px-10 pt-10 sm:pt-20 relative z-10"
       >
-        <SpotlightCard className="h-fit p-8 transition-all border-4">
-          <div className="flex h-full flex-col">
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-primary/10 p-3">
-                <Image className="h-8 w-8 text-primary" strokeWidth={1.5} />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-medium">AI Images</h3>
-                <div className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm text-muted-foreground">
-                  AI image generation
+        <div className=" grid grid-cols-1 sm:grid-cols-2 px-10">
+          <div className="flex order-2 sm:order-1 flex-col gap-4">
+            <SpotlightCard className="h-fit p-8 transition-all border-4">
+              <div className="flex h-full flex-col">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-primary/10 p-3">
+                    <Image className="h-8 w-8 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-medium">AI Images</h3>
+                    <div className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm text-muted-foreground">
+                      AI image generation
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-muted-foreground">
+                    Experience an image generator that smoothly creates images
+                    from your imagination. Write an advanced or simple prompt
+                    and watch your text come to life.
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-muted-foreground">
-                Experience an image generator that smoothly creates images from
-                your imagination. Write an advanced or simple prompt and watch
-                your text come to life.
-              </p>
-            </div>
+            </SpotlightCard>
+            <SpotlightCard
+              className="h-fit p-8 transition-all border-4"
+              multiSpotlight
+              glowEffect
+              gradientColor="rgb(99, 102, 241)"
+            >
+              <div className="flex h-full flex-col">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-indigo-500/10 p-3">
+                    <Zap
+                      className="h-8 w-8 text-indigo-500"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-medium">AI videos</h3>
+                    <div className="inline-flex items-center rounded-lg bg-indigo-500/10 px-3 py-1 text-sm text-indigo-500">
+                      Ai video generator
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-muted-foreground">
+                    Experience an video generator that smoothly creates videos
+                    from your imagination. Write an advanced or simple prompt
+                    and watch your text come to life.
+                  </p>
+                </div>
+              </div>
+            </SpotlightCard>
           </div>
-        </SpotlightCard>
 
-        <SpotlightCard
-          className="h-fit p-8 transition-all border-4"
-          multiSpotlight
-          glowEffect
-          gradientColor="rgb(99, 102, 241)"
-        >
-          <div className="flex h-full flex-col">
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-indigo-500/10 p-3">
-                <Zap className="h-8 w-8 text-indigo-500" strokeWidth={1.5} />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-medium">AI videos</h3>
-                <div className="inline-flex items-center rounded-lg bg-indigo-500/10 px-3 py-1 text-sm text-indigo-500">
-                  Ai video generator
-                </div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-muted-foreground">
-                Experience an video generator that smoothly creates videos from
-                your imagination. Write an advanced or simple prompt and watch
-                your text come to life.
-              </p>
-            </div>
+          <div className="w-full order-1 sm:order-2 pb-10 sm:pb-0  h-auto flex flex-col items-center justify-center space-y-4">
+            <h1 className="text-3xl sm:text-6xl font-extrabold bg-purple-500 text-white leading-tight uppercase px-6 py-2 skew-x-12  ">
+              5 free credits!
+            </h1>
+            <h2 className="text-lg sm:text-2xl font-extrabold bg-amber-500 text-white leading-tight uppercase px-6 py-2 -skew-x-12 ">
+              When signing up for free!
+            </h2>
+            <p className="text-sm sm:text-lg text-center font-semibold max-w-lg bg-gradient-to-bl from-amber-400/40 to-purple-400/40 text-zinc-800 p-4 rounded-2xl">
+              5 credits can be used for image generation or a short video
+              generation using top of the line AI models. <br /> We use google
+              veo 3 and seedance for video generation. <br /> For image
+              generation we use flux dev and flux fast
+            </p>
           </div>
-        </SpotlightCard>
-
-        <SpotlightCard
-          className="h-fit p-8 transition-all border-4"
-          spotlightBlur
-          animated
-          glowEffect
-          spotlightSize={300}
-          spotlightOpacity={0.2}
-          glowSize={200}
-          glowOpacity={0.3}
-          gradientColor="rgb(244, 63, 94)"
-        >
-          <div className="flex h-full flex-col">
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-rose-500/10 p-3">
-                <Palette className="h-8 w-8 text-rose-500" strokeWidth={1.5} />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-medium">Animated Spotlight</h3>
-                <div className="inline-flex items-center rounded-lg bg-rose-500/10 px-3 py-1 text-sm text-rose-500">
-                  Interactive Animation
-                </div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-muted-foreground">
-                Watch as the spotlight comes alive with smooth animations,
-                creating an immersive experience that responds to user
-                interaction in real-time.
-              </p>
-            </div>
-          </div>
-        </SpotlightCard>
-
-        <SpotlightCard
-          className="h-fit p-8 transition-all border-4"
-          spotlightSize={300}
-          spotlightOpacity={0.2}
-          glowEffect
-          glowSize={150}
-          glowOpacity={0.2}
-          gradientColor="rgb(34, 197, 94)"
-        >
-          <div className="flex h-full flex-col">
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-green-500/10 p-3">
-                <Code className="h-8 w-8 text-green-500" strokeWidth={1.5} />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-medium">Custom Configuration</h3>
-                <div className="inline-flex items-center rounded-lg bg-green-500/10 px-3 py-1 text-sm text-green-500">
-                  Advanced Settings
-                </div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-muted-foreground">
-                Fully customizable spotlight with precise control over size,
-                opacity, and glow effects to match your design requirements
-                perfectly.
-              </p>
-            </div>
-          </div>
-        </SpotlightCard>
+        </div>
       </motion.div>
     </section>
   );
