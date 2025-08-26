@@ -33,7 +33,7 @@ const Pricing = ({ products, mostPopularProduct = "pro" }: PricingProps) => {
     >
       <div className="w-full container mx-auto py-32 flex flex-col items-center justify-center space-y-6">
         <div className="text-center flex flex-col items-center justify-center">
-          <AnimatedGradientText className="text-6xl">
+          <AnimatedGradientText className="text-6xl pb-2">
             <span>Pricing</span>
           </AnimatedGradientText>
 

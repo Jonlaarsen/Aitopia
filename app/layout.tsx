@@ -15,7 +15,7 @@ const lato = Lato({
 // });
 
 export const metadata: Metadata = {
-  title: "Aitopia",
+  title: "HAiVEN | Ai services",
   description: "AI image and video generator",
 };
 

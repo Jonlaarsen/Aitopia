@@ -2,8 +2,12 @@
 
 import {
   FileImage,
+  FileText,
+  FileVolumeIcon,
   Image,
   LucideFileVideo,
+  MessageSquareText,
+  Mic,
   Settings2,
   SquareActivity,
   Video,
@@ -25,8 +29,20 @@ const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: SquareActivity },
   { title: "Generate Image", url: "/image-generator", icon: Image },
   { title: "Generate Video", url: "/video-generator", icon: Video },
+  { title: "Speech to Text", url: "/speech-to-text", icon: Mic },
+  { title: "Text to speech", url: "/text-to-speech", icon: MessageSquareText },
   { title: "My Images", url: "/image-gallery", icon: LucideFileVideo },
   { title: "My Videos", url: "/video-gallery", icon: FileImage },
+  {
+    title: "Speech Gallery",
+    url: "/speech-to-text-gallery",
+    icon: FileVolumeIcon,
+  },
+  {
+    title: "Text Gallery",
+    url: "/text-to-speech-gallery",
+    icon: FileText,
+  },
   { title: "Settings", url: "/account-settings", icon: Settings2 },
   { title: "Billing", url: "/billing", icon: WalletCards },
 ];

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Aperture, ChevronsUpDown } from "lucide-react";
+import { Aperture, BotIcon, ChevronsUpDown } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 
@@ -44,7 +44,6 @@ export async function AppSidebar({
               {data.user?.user_metadata.full_name}
             </span>
           </div>
-          <ChevronsUpDown className="ml-auto" />
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>

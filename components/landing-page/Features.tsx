@@ -2,7 +2,7 @@
 import React from "react";
 import { AnimatedGradientText } from "../magicui/animated-gradient-text";
 import SpotlightCard from "../ui/spotlight-card";
-import { Code, Image, Palette, Zap } from "lucide-react";
+import { FileVideo2, Image, Speech, Text } from "lucide-react";
 import { motion } from "motion/react";
 
 const Features = () => {
@@ -69,7 +69,7 @@ const Features = () => {
               <div className="flex h-full flex-col">
                 <div className="flex items-center gap-4">
                   <div className="rounded-xl bg-indigo-500/10 p-3">
-                    <Zap
+                    <FileVideo2
                       className="h-8 w-8 text-indigo-500"
                       strokeWidth={1.5}
                     />
@@ -105,6 +105,81 @@ const Features = () => {
               veo 3 and seedance for video generation. <br /> For image
               generation we use flux dev and flux fast
             </p>
+          </div>
+        </div>
+        {/* Second column */}
+        <div className=" grid grid-cols-1 sm:grid-cols-2 px-10">
+          <div className="w-full  pb-10 sm:pb-0  h-auto flex flex-col items-center justify-center space-y-4">
+            <h1 className="text-3xl sm:text-6xl font-extrabold  bg-amber-500 text-white leading-tight uppercase px-6 py-2 -skew-x-12  ">
+              5x Services
+            </h1>
+            <h2 className="text-lg sm:text-2xl font-extrabold bg-purple-500 text-white leading-tight uppercase px-6 py-2 skew-x-12 ">
+              When signing up for free!
+            </h2>
+            <p className="text-sm sm:text-lg text-center font-semibold max-w-lg bg-gradient-to-bl from-amber-400/40 to-purple-400/40 text-zinc-800 p-4 rounded-2xl">
+              5 credits can be used for image generation or a short video
+              generation using top of the line AI models. <br /> We use google
+              veo 3 and seedance for video generation. <br /> For image
+              generation we use flux dev and flux fast
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <SpotlightCard className="h-fit p-8 transition-all border-4">
+              <div className="flex h-full flex-col">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-primary/10 p-3">
+                    <Speech
+                      className="h-8 w-8 text-primary"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-medium">Speech to Text</h3>
+                    <div className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm text-muted-foreground">
+                      transcription service
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-muted-foreground">
+                    Experience an image generator that smoothly creates images
+                    from your imagination. Write an advanced or simple prompt
+                    and watch your text come to life.
+                  </p>
+                </div>
+              </div>
+            </SpotlightCard>
+            <SpotlightCard
+              className="h-fit p-8 transition-all border-4"
+              multiSpotlight
+              glowEffect
+              gradientColor="rgb(99, 102, 241)"
+            >
+              <div className="flex h-full flex-col">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-indigo-500/10 p-3">
+                    <Text
+                      className="h-8 w-8 text-indigo-500"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-medium">Text to Speech</h3>
+                    <div className="inline-flex items-center rounded-lg bg-indigo-500/10 px-3 py-1 text-sm text-indigo-500">
+                      Text to Speech generator
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-muted-foreground">
+                    Experience an video generator that smoothly creates videos
+                    from your imagination. Write an advanced or simple prompt
+                    and watch your text come to life.
+                  </p>
+                </div>
+              </div>
+            </SpotlightCard>
           </div>
         </div>
       </motion.div>
