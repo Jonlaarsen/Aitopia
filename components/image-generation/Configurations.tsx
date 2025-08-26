@@ -31,12 +31,12 @@ import { BadgeInfoIcon } from "lucide-react";
 import useGeneratedStore from "@/store/useGeneratedStore";
 
 export const ImageGeneratorFormSchema = z.object({
-  model: z.string({ error: "Model is required" }),
-  prompt: z.string({ error: "Prompt is required" }),
-  guidance: z.number({ error: "Guidance scale is required" }),
+  model: z.string({ required_error: "Model is required" }),
+  prompt: z.string({ required_error: "Prompt is required" }),
+  guidance: z.number({ required_error: "Guidance scale is required" }),
   num_outputs: z.number().min(1, { message: "Number of outputs is required" }),
-  aspect_ratio: z.string({ error: "Aspect ratio is required" }),
-  output_format: z.string({ error: "Output format is required" }),
+  aspect_ratio: z.string({ required_error: "Aspect ratio is required" }),
+  output_format: z.string({ required_error: "Output format is required" }),
   output_quality: z.number().min(1, { message: "Output quality is required" }),
   num_inference_steps: z
     .number()

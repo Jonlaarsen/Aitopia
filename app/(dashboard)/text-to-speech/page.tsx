@@ -8,7 +8,7 @@ export default function TextToSpeechPage() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Text to Speech</h1>
         <p className="text-muted-foreground">
-          Convert your text into natural-sounding speech using OpenAI's advanced
+          Convert your text into natural-sounding speech using advanced
           voice models.
         </p>
       </div>

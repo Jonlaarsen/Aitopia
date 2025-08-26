@@ -19,7 +19,7 @@ export default function TranscriptionsGallery() {
   const [sortBy, setSortBy] = useState<"date" | "name" | "title" | "size">("date");
 
   const filteredTranscriptions = useMemo(() => {
-    let filtered = transcriptions.filter(transcription => {
+    const filtered = transcriptions.filter(transcription => {
       const matchesSearch = transcription.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            transcription.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            (transcription.title && transcription.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -103,7 +103,7 @@ export default function TranscriptionsGallery() {
             No Transcriptions
           </CardTitle>
           <CardDescription>
-            You haven't created any transcriptions yet
+            You haven&apos;t created any transcriptions yet
           </CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-center h-64">

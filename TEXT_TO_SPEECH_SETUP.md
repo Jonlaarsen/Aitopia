@@ -109,3 +109,4 @@ OpenAI has rate limits on their API. If you encounter rate limit errors:
 - Never commit your `.env.local` file to version control
 - Keep your API keys secure and private
 - Consider implementing user authentication and rate limiting for production use
+

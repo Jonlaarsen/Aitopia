@@ -25,13 +25,13 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 const formSchema = z
   .object({
     password: z
-      .string({ error: "Password is required" })
+      .string({ required_error: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" })
       .regex(passwordRegex, {
         message:
           "Password must contain at least 8 characters and atleast one uppercase letter, one lowercase letter, and one number",
       }),
-    confirmPassword: z.string({ error: "Confirm password is required" }),
+    confirmPassword: z.string({ required_error: "Confirm password is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords does not match",

@@ -36,3 +36,4 @@ export const useTextToSpeechStore = create<TextToSpeechStore>((set) => ({
     })),
   clearEntries: () => set({ entries: [] }),
 }));
+

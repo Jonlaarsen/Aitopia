@@ -127,7 +127,7 @@ export default function TextToSpeechConfigurations() {
             Text to Speech Configuration
           </CardTitle>
           <CardDescription>
-            Convert your text into natural-sounding speech using OpenAI's advanced voice models.
+            Convert your text into natural-sounding speech using OpenAI&apos;s advanced voice models.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

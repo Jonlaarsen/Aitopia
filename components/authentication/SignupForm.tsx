@@ -27,13 +27,13 @@ const formSchema = z
     full_name: z.string().min(3, { message: "Full name is required" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: z
-      .string({ error: "Password is required" })
+      .string({ required_error: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" })
       .regex(passwordRegex, {
         message:
           "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
       }),
-    confirm_password: z.string({ error: "Confirm password is required" }),
+    confirm_password: z.string({ required_error: "Confirm password is required" }),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: "Passwords does not match",
