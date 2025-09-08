@@ -108,19 +108,20 @@ const Features = () => {
           </div>
         </div>
         {/* Second column */}
-        <div className=" grid grid-cols-1 sm:grid-cols-2 px-10">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 px-10 pt-10">
           <div className="w-full  pb-10 sm:pb-0  h-auto flex flex-col items-center justify-center space-y-4">
             <h1 className="text-3xl sm:text-6xl font-extrabold  bg-amber-500 text-white leading-tight uppercase px-6 py-2 -skew-x-12  ">
               2 new services!
             </h1>
             <h2 className="text-lg sm:text-2xl font-extrabold bg-purple-500 text-white leading-tight uppercase px-6 py-2 skew-x-12 ">
-              When signing up for free!
+              Available now!
             </h2>
-            <p className="text-sm sm:text-lg text-center font-semibold max-w-lg bg-gradient-to-bl from-amber-400/40 to-purple-400/40 text-zinc-800 p-4 rounded-2xl">
-              5 credits can be used for image generation or a short video
-              generation using top of the line AI models. <br /> We use google
-              veo 3 and seedance for video generation. <br /> For image
-              generation we use flux dev and flux fast
+            <p className="text-sm sm:text-lg text-center font-semibold max-w-lg bg-gradient-to-bl to-amber-400/40 from-purple-400/40 text-zinc-800 p-4 rounded-2xl">
+              We added a 2 new features to our website already! <br />
+              You can now use our modern ai speech to text service! <br />
+              compatible with audio and video files! <br />
+              We also added a text to speech ai service! <br />
+              Write a prompt, choose your voice and generate audio from scratch!
             </p>
           </div>
 
@@ -143,9 +144,9 @@ const Features = () => {
                 </div>
                 <div className="mt-4">
                   <p className="text-muted-foreground">
-                    Experience an image generator that smoothly creates images
-                    from your imagination. Write an advanced or simple prompt
-                    and watch your text come to life.
+                    Experience an speech to text generator that smoothly creates
+                    text from your audio. Use an video or audio file and watch
+                    your text smoothly appear!
                   </p>
                 </div>
               </div>
@@ -173,9 +174,9 @@ const Features = () => {
                 </div>
                 <div className="mt-4">
                   <p className="text-muted-foreground">
-                    Experience an video generator that smoothly creates videos
-                    from your imagination. Write an advanced or simple prompt
-                    and watch your text come to life.
+                    Experience an Text to audio generator that smoothly creates
+                    audio from your imagination. Write whatever you want and see
+                    your adio smoothly come to life!
                   </p>
                 </div>
               </div>

@@ -27,7 +27,9 @@ const StatsCards = ({ imageCount, credits }: StatsCardsProps) => {
       <div className="flex items-center justify-start">
         <Card className="space-y-0 max-w-[25rem] w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
-            <CardTitle className="text-sm font-medium">Image Credits</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Generation Credits
+            </CardTitle>
             <CirclePoundSterling className="h-5 w-5 text-zinc-600" />
           </CardHeader>
           <CardContent>

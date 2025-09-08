@@ -124,7 +124,10 @@ export default function SpeechToTextConfigurations() {
       });
 
       if (!dbResult.success) {
-        console.error("Failed to save transcription to database:", dbResult.error);
+        console.error(
+          "Failed to save transcription to database:",
+          dbResult.error
+        );
         toast.error("Transcription completed but failed to save to database");
       } else {
         toast.success("Transcription completed and saved successfully!");
@@ -444,73 +447,6 @@ export default function SpeechToTextConfigurations() {
             </>
           )}
         </Button>
-
-                  {/* Recent Transcriptions Display */}
-          {transcriptions.length > 0 && (
-            <div className="space-y-4">
-              <div className="text-center text-sm text-muted-foreground">
-                {transcriptions.length} transcription
-                {transcriptions.length !== 1 ? "s" : ""} completed
-              </div>
-              
-              {/* Show most recent transcription */}
-              <div className="border rounded-lg p-4 bg-muted/30">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-sm">
-                      {transcriptions[0].title || "Untitled Transcription"}
-                    </h4>
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(transcriptions[0].timestamp).toLocaleDateString()}
-                    </span>
-                  </div>
-                  
-                  {transcriptions[0].description && (
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {transcriptions[0].description}
-                    </p>
-                  )}
-                  
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <span>•</span>
-                      {transcriptions[0].originalFileType === "video" ? (
-                        <>
-                          <Video className="h-3 w-3" />
-                          <span>Video</span>
-                        </>
-                      ) : (
-                        <>
-                          <Music className="h-3 w-3" />
-                          <span>Audio</span>
-                        </>
-                      )}
-                    </span>
-                    <span>•</span>
-                    <span>{transcriptions[0].model}</span>
-                    <span>•</span>
-                    <span>{transcriptions[0].language === "auto" ? "Auto-detect" : transcriptions[0].language}</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {transcriptions[0].fileName}
-                    </span>
-                    <Button
-                      variant="link"
-                      size="sm"
-                      onClick={() =>
-                        (window.location.href = "/speech-to-text-gallery")
-                      }
-                      className="text-blue-600 hover:text-blue-700 text-xs"
-                    >
-                      View All Transcriptions →
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
       </CardContent>
     </Card>
   );

@@ -3,14 +3,29 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Volume2, Play, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTextToSpeechStore } from "@/store/useTextToSpeechStore";
-import { storeTextToSpeech, uploadAudioFile } from "@/app/actions/speech-actions";
+import {
+  storeTextToSpeech,
+  uploadAudioFile,
+} from "@/app/actions/speech-actions";
 
 interface TextToSpeechConfig {
   text: string;
@@ -50,19 +65,19 @@ export default function TextToSpeechConfigurations() {
   const [description, setDescription] = useState("");
 
   const handleTextChange = (value: string) => {
-    setConfig(prev => ({ ...prev, text: value }));
+    setConfig((prev) => ({ ...prev, text: value }));
   };
 
   const handleVoiceChange = (value: string) => {
-    setConfig(prev => ({ ...prev, voice: value }));
+    setConfig((prev) => ({ ...prev, voice: value }));
   };
 
   const handleSpeedChange = (value: number[]) => {
-    setConfig(prev => ({ ...prev, speed: value[0] }));
+    setConfig((prev) => ({ ...prev, speed: value[0] }));
   };
 
   const handleFormatChange = (value: string) => {
-    setConfig(prev => ({ ...prev, format: value }));
+    setConfig((prev) => ({ ...prev, format: value }));
   };
 
   const generateSpeech = async () => {
@@ -94,18 +109,22 @@ export default function TextToSpeechConfigurations() {
       const url = URL.createObjectURL(blob);
       setAudioUrl(url);
       setAudioBlob(blob);
-      
+
       // Create a file from the blob for upload
-      const fileName = `${title.replace(/[^a-zA-Z0-9]/g, '_')}.${config.format}`;
-      const file = new File([blob], fileName, { type: `audio/${config.format}` });
-      
+      const fileName = `${title.replace(/[^a-zA-Z0-9]/g, "_")}.${
+        config.format
+      }`;
+      const file = new File([blob], fileName, {
+        type: `audio/${config.format}`,
+      });
+
       // Upload to Supabase Storage
       const uploadResult = await uploadAudioFile(file);
-      
+
       if (!uploadResult.success) {
         throw new Error("Failed to upload audio file");
       }
-      
+
       // Save to database
       const dbResult = await storeTextToSpeech({
         fileName: fileName,
@@ -129,7 +148,7 @@ export default function TextToSpeechConfigurations() {
       } else {
         toast.success("Speech generated and saved successfully!");
       }
-      
+
       // Add to local store
       addEntry({
         text: config.text,
@@ -138,7 +157,6 @@ export default function TextToSpeechConfigurations() {
         format: config.format,
         audioUrl: url,
       });
-      
     } catch (error) {
       console.error("Error generating speech:", error);
       toast.error("Failed to generate speech. Please try again.");
@@ -149,7 +167,7 @@ export default function TextToSpeechConfigurations() {
 
   const downloadAudio = () => {
     if (!audioBlob) return;
-    
+
     const url = URL.createObjectURL(audioBlob);
     const a = document.createElement("a");
     a.href = url;
@@ -169,7 +187,8 @@ export default function TextToSpeechConfigurations() {
             Text to Speech Configuration
           </CardTitle>
           <CardDescription>
-            Convert your text into natural-sounding speech using OpenAI&apos;s advanced voice models.
+            Convert your text into natural-sounding speech using OpenAI&apos;s
+            advanced voice models.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -188,7 +207,7 @@ export default function TextToSpeechConfigurations() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1  gap-4">
             <div className="space-y-2">
               <Label htmlFor="title">
                 Title <span className="text-red-500">*</span>
@@ -215,21 +234,41 @@ export default function TextToSpeechConfigurations() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="voice">Voice</Label>
-              <Select value={config.voice} onValueChange={handleVoiceChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a voice" />
-                </SelectTrigger>
-                <SelectContent>
-                  {voices.map((voice) => (
-                    <SelectItem key={voice.value} value={voice.value}>
-                      {voice.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="grid grid-cols-1  gap-4">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="voice">Voice</Label>
+                <Select value={config.voice} onValueChange={handleVoiceChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a voice" />
+                  </SelectTrigger>
+                  <SelectContent className="w-full">
+                    {voices.map((voice) => (
+                      <SelectItem key={voice.value} value={voice.value}>
+                        {voice.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="format">Format</Label>
+                <Select
+                  value={config.format}
+                  onValueChange={handleFormatChange}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select format" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formats.map((format) => (
+                      <SelectItem key={format.value} value={format.value}>
+                        {format.value.toUpperCase()}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -243,22 +282,6 @@ export default function TextToSpeechConfigurations() {
                 step={0.25}
                 className="w-full"
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="format">Format</Label>
-              <Select value={config.format} onValueChange={handleFormatChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select format" />
-                </SelectTrigger>
-                <SelectContent>
-                  {formats.map((format) => (
-                    <SelectItem key={format.value} value={format.value}>
-                      {format.value.toUpperCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
           </div>
 
@@ -282,29 +305,6 @@ export default function TextToSpeechConfigurations() {
           </Button>
         </CardContent>
       </Card>
-
-      {audioUrl && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Generated Audio</CardTitle>
-            <CardDescription>
-              Preview and download your generated speech audio.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <audio controls className="w-full" src={audioUrl}>
-              Your browser does not support the audio element.
-            </audio>
-            
-            <div className="flex gap-2">
-              <Button onClick={downloadAudio} variant="outline" className="flex-1">
-                <Download className="mr-2 h-4 w-4" />
-                Download Audio
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
