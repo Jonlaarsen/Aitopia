@@ -111,7 +111,7 @@ const Features = () => {
         <div className=" grid grid-cols-1 sm:grid-cols-2 px-10">
           <div className="w-full  pb-10 sm:pb-0  h-auto flex flex-col items-center justify-center space-y-4">
             <h1 className="text-3xl sm:text-6xl font-extrabold  bg-amber-500 text-white leading-tight uppercase px-6 py-2 -skew-x-12  ">
-              5x Services
+              2 new services!
             </h1>
             <h2 className="text-lg sm:text-2xl font-extrabold bg-purple-500 text-white leading-tight uppercase px-6 py-2 skew-x-12 ">
               When signing up for free!

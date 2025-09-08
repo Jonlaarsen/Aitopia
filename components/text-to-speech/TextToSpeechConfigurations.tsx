@@ -10,6 +10,7 @@ import { Slider } from "@/components/ui/slider";
 import { Volume2, Play, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTextToSpeechStore } from "@/store/useTextToSpeechStore";
+import { storeTextToSpeech, uploadAudioFile } from "@/app/actions/speech-actions";
 
 interface TextToSpeechConfig {
   text: string;
@@ -45,6 +46,8 @@ export default function TextToSpeechConfigurations() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleTextChange = (value: string) => {
     setConfig(prev => ({ ...prev, text: value }));
@@ -68,6 +71,11 @@ export default function TextToSpeechConfigurations() {
       return;
     }
 
+    if (!title.trim()) {
+      toast.error("Please enter a title for the audio file");
+      return;
+    }
+
     setIsGenerating(true);
     try {
       const response = await fetch("/api/text-to-speech", {
@@ -87,7 +95,42 @@ export default function TextToSpeechConfigurations() {
       setAudioUrl(url);
       setAudioBlob(blob);
       
-      // Add to store
+      // Create a file from the blob for upload
+      const fileName = `${title.replace(/[^a-zA-Z0-9]/g, '_')}.${config.format}`;
+      const file = new File([blob], fileName, { type: `audio/${config.format}` });
+      
+      // Upload to Supabase Storage
+      const uploadResult = await uploadAudioFile(file);
+      
+      if (!uploadResult.success) {
+        throw new Error("Failed to upload audio file");
+      }
+      
+      // Save to database
+      const dbResult = await storeTextToSpeech({
+        fileName: fileName,
+        audioUrl: uploadResult.url!,
+        text: config.text,
+        voice: config.voice,
+        language: "en", // You might want to make this configurable
+        speed: config.speed,
+        pitch: 1.0, // Default pitch
+        volume: 1.0, // Default volume
+        fileSize: blob.size,
+        duration: undefined, // You could calculate this if needed
+        format: config.format,
+        title: title,
+        description: description,
+      });
+
+      if (!dbResult.success) {
+        console.error("Failed to save to database:", dbResult.error);
+        toast.error("Audio generated but failed to save to database");
+      } else {
+        toast.success("Speech generated and saved successfully!");
+      }
+      
+      // Add to local store
       addEntry({
         text: config.text,
         voice: config.voice,
@@ -96,7 +139,6 @@ export default function TextToSpeechConfigurations() {
         audioUrl: url,
       });
       
-      toast.success("Speech generated successfully!");
     } catch (error) {
       console.error("Error generating speech:", error);
       toast.error("Failed to generate speech. Please try again.");
@@ -144,6 +186,33 @@ export default function TextToSpeechConfigurations() {
             <p className="text-sm text-muted-foreground">
               {config.text.length} characters
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">
+                Title <span className="text-red-500">*</span>
+              </Label>
+              <input
+                id="title"
+                type="text"
+                placeholder="Enter a title for the audio file"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <input
+                id="description"
+                type="text"
+                placeholder="Enter a description (optional)"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -195,7 +264,7 @@ export default function TextToSpeechConfigurations() {
 
           <Button
             onClick={generateSpeech}
-            disabled={isGenerating || !config.text.trim()}
+            disabled={isGenerating || !config.text.trim() || !title.trim()}
             className="w-full"
             size="lg"
           >

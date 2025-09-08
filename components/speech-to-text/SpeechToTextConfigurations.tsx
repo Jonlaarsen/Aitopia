@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { useSpeechToTextStore } from "@/store/useSpeechToTextStore";
+import { storeTranscription } from "@/app/actions/text-actions";
 import { toast } from "sonner";
 
 export default function SpeechToTextConfigurations() {
@@ -109,6 +110,27 @@ export default function SpeechToTextConfigurations() {
 
       const result = await response.json();
 
+      // Save to database
+      const dbResult = await storeTranscription({
+        fileName: fileName,
+        text: result.text,
+        model: model,
+        language: language,
+        fileSize: selectedFile.size,
+        originalFileType: fileType || "audio",
+        responseFormat: responseFormat,
+        title: title,
+        description: description,
+      });
+
+      if (!dbResult.success) {
+        console.error("Failed to save transcription to database:", dbResult.error);
+        toast.error("Transcription completed but failed to save to database");
+      } else {
+        toast.success("Transcription completed and saved successfully!");
+      }
+
+      // Add to local store
       addTranscription({
         id: Date.now().toString(),
         fileName: fileName,

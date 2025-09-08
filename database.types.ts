@@ -104,6 +104,54 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_text: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          file_name: string
+          file_size: number
+          id: string
+          language: string
+          model: string
+          original_file_type: string | null
+          response_format: string
+          text_content: string
+          title: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          file_name: string
+          file_size: number
+          id?: string
+          language: string
+          model: string
+          original_file_type?: string | null
+          response_format: string
+          text_content: string
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          file_name?: string
+          file_size?: number
+          id?: string
+          language?: string
+          model?: string
+          original_file_type?: string | null
+          response_format?: string
+          text_content?: string
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       generated_videos: {
         Row: {
           aspect_ratio: string | null
@@ -223,6 +271,54 @@ export type Database = {
         }
         Relationships: []
       }
+      speech_to_text: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          file_name: string
+          file_size: number
+          id: string
+          language: string
+          model: string
+          original_file_type: string | null
+          response_format: string
+          text_content: string
+          title: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          file_name: string
+          file_size: number
+          id?: string
+          language: string
+          model: string
+          original_file_type?: string | null
+          response_format: string
+          text_content: string
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          file_name?: string
+          file_size?: number
+          id?: string
+          language?: string
+          model?: string
+          original_file_type?: string | null
+          response_format?: string
+          text_content?: string
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           cancel_at: string | null
@@ -284,48 +380,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      transcriptions: {
-        Row: {
-          created_at: string | null
-          file_name: string
-          file_size: number
-          id: string
-          language: string
-          model: string
-          original_file_type: string | null
-          response_format: string
-          text_content: string
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          file_name: string
-          file_size: number
-          id?: string
-          language: string
-          model: string
-          original_file_type?: string | null
-          response_format: string
-          text_content: string
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          file_name?: string
-          file_size?: number
-          id?: string
-          language?: string
-          model?: string
-          original_file_type?: string | null
-          response_format?: string
-          text_content?: string
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
       }
       users: {
         Row: {
